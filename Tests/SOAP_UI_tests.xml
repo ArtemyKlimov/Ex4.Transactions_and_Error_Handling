@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
+   <soap:Header/>
+   <soap:Body>
+      <ib:cardTransactRq>
+         <ib:clientId>${#Project#ClientId}</ib:clientId>
+         <ib:phoneNum>${#Project#phoneNum}</ib:phoneNum>
+         <ib:amount>${#Project#amount}</ib:amount>
+         <ib:sender>
+            <ib:cardNo>${#Project#cardNo}</ib:cardNo>
+            <ib:cardOwner>Ivan Petrov</ib:cardOwner>
+            <ib:validThru>${#Project#validThru}</ib:validThru>
+         </ib:sender>
+         <ib:receiver>
+            <ib:cardNo>1111222233334444</ib:cardNo>
+            <ib:cardOwner>Vasiliy Sidorov</ib:cardOwner>
+            <ib:validThru>12.22</ib:validThru>
+         </ib:receiver>
+      </ib:cardTransactRq>
+   </soap:Body>
+</soap:Envelope>

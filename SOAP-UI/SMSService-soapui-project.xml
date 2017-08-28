@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="0f7630a0-ca5f-48f6-9a08-1f88f74aa2c7" activeEnvironment="Default" name="SMSService" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="9c0e5937-f773-4302-8374-92ca635296c7" wsaVersion="NONE" name="SendSMSSOAP" type="wsdl" bindingName="{http://www.example.org/SendSMS/}SendSMSSOAP" soapVersion="1_1" anonymous="optional" definition="file:/C:/LocalRepo/EX4/SMS_SERVICE/SendSMS.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/LocalRepo/EX4/SMS_SERVICE/SendSMS.wsdl"><con:part><con:url>file:/C:/LocalRepo/EX4/SMS_SERVICE/SendSMS.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="SendSMS" targetNamespace="http://www.example.org/SendSMS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/SendSMS/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="SendSMSSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/SendSMS/">
+      <xsd:include schemaLocation="SMSService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSMSBatchRequest">
+    <wsdl:part element="tns:SendSMSBatch" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSBatchResponse">
+    <wsdl:part element="tns:SendSMSBatchResponse" name="SendSMSBatchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SendSMS">
+    <wsdl:operation name="SendSMSBatch">
+      <wsdl:input message="tns:SendSMSBatchRequest"/>
+      <wsdl:output message="tns:SendSMSBatchResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SendSMSSOAP" type="tns:SendSMS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SendSMSBatch">
+      <soap:operation soapAction="http://www.example.org/SendSMS/SendSMSBatch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SendSMS">
+    <wsdl:port binding="tns:SendSMSSOAP" name="SendSMSSOAP">
+      <soap:address location="http://localhost:7802/SendSMS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\LocalRepo\EX4\SMS_SERVICE\SMSService.xsd</con:url><con:content><![CDATA[<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.example.org/SendSMS/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/SendSMS/">
+  <xsd:element name="SendSMSBatch" type="tns:SendSMSBatch"/>
+  <xsd:element name="SendSMSBatchResponse" type="tns:BatchResponseType"/>
+  <xsd:complexType name="SendSMSBatch">
+    <xsd:sequence>
+      <xsd:element name="SMS" type="tns:SMSType" minOccurs="1" maxOccurs="500"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SMSType">
+    <xsd:sequence>
+      <xsd:element name="Text" type="xsd:string"/>
+      <xsd:element name="Number" type="tns:phoneNum"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" use="required" type="xsd:ID"/>
+  </xsd:complexType>
+  <xsd:simpleType name="phoneNum">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d{10,12}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="BatchResponseType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="xsd:string" minOccurs="1"/>
+      <xsd:element name="ErrorDescription" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" use="required" type="xsd:ID"/>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7802/</con:endpoint></con:endpoints><con:operation id="a69aaca0-0743-4fca-89e8-711521dad361" isOneWay="false" action="http://www.example.org/SendSMS/SendSMSBatch" name="SendSMSBatch" bindingOperationName="SendSMSBatch" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5a032b8c-c133-4add-8b78-8d4e8e440b69" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7802/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sen="http://www.example.org/SendSMS/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sen:SendSMSBatch>\r
+         <!--1 to 500 repetitions:-->\r
+         <sen:SMS id="?">\r
+            <sen:Text>?</sen:Text>\r
+            <sen:Number>?</sen:Number>\r
+         </sen:SMS>\r
+      </sen:SendSMSBatch>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/SendSMS/SendSMSBatch"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService id="6ad6a627-f0ce-4ea3-9576-d6c4c246098b" port="7802" path="/" host="localhost" name="MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="SendSMSBatch" id="ad860c37-5b88-4927-9b69-f32f605ffeb2" interface="SendSMSSOAP" operation="SendSMSBatch"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="29f187f8-0bc4-4463-bdfb-f8b4b8dfd2eb" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sen="http://www.example.org/SendSMS/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sen:SendSMSBatchResponse id="fd8624af-d8e6-4f9c-80fc-dd57917db725">
+         <sen:Status>OK</sen:Status>
+         <!--Optional:-->
+         <sen:ErrorDescription>Impossible to Send SMS</sen:ErrorDescription>
+      </sen:SendSMSBatchResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/SendSMS/SendSMSBatch"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

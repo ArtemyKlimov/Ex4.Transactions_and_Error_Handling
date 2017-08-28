@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:ComIbmTimeoutControl.msgnode="ComIbmTimeoutControl.msgnode" xmlns:ComIbmTimeoutNotification.msgnode="ComIbmTimeoutNotification.msgnode" xmlns:ComIbmTrace.msgnode="ComIbmTrace.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="PROCESSING.msgflow"
+    nsPrefix="PROCESSING.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="PROCESSING" bundleName="PROCESSING" pluginId="PROCESSING.IN"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PROCESSING.IN/icons/full/obj16/PROCESSING.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PROCESSING.IN/icons/full/obj30/PROCESSING.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="243,173" queueName="PROCESSING.IN" messageDomainProperty="XMLNSC">
+        <translation xmi:type="utility:ConstantString" string="MQ Input"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="514,173" computeExpression="esql://routine/#PROCESSING_Compute.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Compute"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="771,221" destinationMode="list">
+        <translation xmi:type="utility:ConstantString" string="MQ Output"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTimeoutNotification.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="211,272" uniqueIdentifier="PROCESSING" transactionMode="no" operationMode="controlled">
+        <translation xmi:type="utility:ConstantString" string="Timeout Notification"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTimeoutControl.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="743,119" uniqueIdentifier="PROCESSING" requestLocation="InputLocalEnvironment.TimeoutRequest" messageDomain="XMLNSC">
+        <translation xmi:type="utility:ConstantString" string="Timeout Control"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="630,268" destination="file" filePath="C:\test\ex4\PROCESSING_AFTER_Compute.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="598,339" destination="file" filePath="C:\test\ex4\Timeout_Catch.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="386,83" destination="file" filePath="C:\test\ex4\Processing_Before_compute.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace2"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="536,272" computeExpression="esql://routine/#PROCESSING_Compute1.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Compute1"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

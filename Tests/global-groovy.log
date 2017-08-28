@@ -1,0 +1,220 @@
+2017-08-25 15:29:49,091 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 15:29:49,169 INFO  [log] context.expand(propertySpec) : <soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+   <soapenv:Body>
+      <NS1:cardTransactRs xmlns:NS1="http://ib.novy.com">
+         <NS1:guid>15a7b2e6-38eb-46c5-822b-58ae06ed3e74</NS1:guid>
+         <NS1:status>Your request is being processed</NS1:status>
+         <NS1:clientId>131</NS1:clientId>
+         <NS1:amount>1000</NS1:amount>
+         <NS1:currentDayAmount>5000</NS1:currentDayAmount>
+      </NS1:cardTransactRs>
+   </soapenv:Body>
+</soapenv:Envelope>
+2017-08-25 15:29:49,283 INFO  [log] node named 'Envelope' has content :
+2017-08-25 15:29:49,283 INFO  [log] 15a7b2e6-38eb-46c5-822b-58ae06ed3e74Your request is being processed13110005000
+2017-08-25 15:29:49,284 INFO  [log] node named 'Body' has content :
+2017-08-25 15:29:49,284 INFO  [log] 15a7b2e6-38eb-46c5-822b-58ae06ed3e74Your request is being processed13110005000
+2017-08-25 15:29:49,284 INFO  [log] node named 'cardTransactRs' has content :
+2017-08-25 15:29:49,284 INFO  [log] 15a7b2e6-38eb-46c5-822b-58ae06ed3e74Your request is being processed13110005000
+2017-08-25 15:29:49,284 INFO  [log] node named 'guid' has content :
+2017-08-25 15:29:49,284 INFO  [log] 15a7b2e6-38eb-46c5-822b-58ae06ed3e74
+2017-08-25 15:29:49,285 INFO  [log] node named 'status' has content :
+2017-08-25 15:29:49,285 INFO  [log] Your request is being processed
+2017-08-25 15:29:49,285 INFO  [log] node named 'clientId' has content :
+2017-08-25 15:29:49,285 INFO  [log] 131
+2017-08-25 15:29:49,285 INFO  [log] node named 'amount' has content :
+2017-08-25 15:29:49,285 INFO  [log] 1000
+2017-08-25 15:29:49,285 INFO  [log] node named 'currentDayAmount' has content :
+2017-08-25 15:29:49,286 INFO  [log] 5000
+2017-08-25 15:29:49,286 INFO  [log] DONE
+2017-08-25 15:57:00,731 INFO  [log] DONE
+2017-08-25 15:57:41,521 INFO  [log] DONE
+2017-08-25 16:01:00,032 INFO  [log] DONE
+2017-08-25 16:14:57,696 INFO  [log] DONE
+2017-08-25 16:16:41,631 INFO  [log] DONE
+2017-08-25 16:35:21,860 INFO  [log] DONE
+2017-08-25 16:36:48,696 INFO  [log] DONE
+2017-08-25 16:40:24,295 INFO  [log] DONE
+2017-08-25 16:52:33,210 INFO  [log] DONE
+2017-08-25 16:52:35,608 INFO  [log] DONE
+2017-08-25 16:57:42,376 INFO  [log] DONE
+2017-08-25 16:57:43,487 INFO  [log] DONE
+2017-08-25 16:59:28,312 INFO  [log] DONE
+2017-08-25 16:59:28,773 INFO  [log] DONE
+2017-08-25 17:05:25,554 INFO  [log] DONE
+2017-08-25 17:05:26,596 INFO  [log] DONE
+2017-08-25 17:09:12,610 INFO  [log] DONE
+2017-08-25 17:09:12,668 INFO  [log] CHANGE
+2017-08-25 17:09:13,178 INFO  [log] DONE
+2017-08-25 17:09:13,179 INFO  [log] CHANGE
+2017-08-25 17:18:30,570 INFO  [log] DONE
+2017-08-25 17:19:09,049 INFO  [log] DONE
+2017-08-25 17:23:45,940 INFO  [log] DONE
+2017-08-25 17:28:21,364 INFO  [log] START
+2017-08-25 17:31:22,917 INFO  [log] START
+2017-08-25 17:31:23,002 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 17:31:23,024 INFO  [log] context.expand(propertySpec) : <soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+   <soapenv:Body>
+      <NS1:cardTransactRs xmlns:NS1="http://ib.novy.com">
+         <NS1:guid>02cbb3d8-3d29-4025-9004-0be58922ed88</NS1:guid>
+         <NS1:status>Your request is being processed</NS1:status>
+         <NS1:clientId>131</NS1:clientId>
+         <NS1:amount>1000</NS1:amount>
+         <NS1:currentDayAmount>30000</NS1:currentDayAmount>
+      </NS1:cardTransactRs>
+   </soapenv:Body>
+</soapenv:Envelope>
+2017-08-25 17:31:23,203 INFO  [log] node named 'Envelope' has content :
+2017-08-25 17:31:23,204 INFO  [log] 02cbb3d8-3d29-4025-9004-0be58922ed88Your request is being processed131100030000
+2017-08-25 17:31:23,204 INFO  [log] node named 'Body' has content :
+2017-08-25 17:31:23,205 INFO  [log] 02cbb3d8-3d29-4025-9004-0be58922ed88Your request is being processed131100030000
+2017-08-25 17:31:23,205 INFO  [log] node named 'cardTransactRs' has content :
+2017-08-25 17:31:23,205 INFO  [log] 02cbb3d8-3d29-4025-9004-0be58922ed88Your request is being processed131100030000
+2017-08-25 17:31:23,205 INFO  [log] node named 'guid' has content :
+2017-08-25 17:31:23,205 INFO  [log] 02cbb3d8-3d29-4025-9004-0be58922ed88
+2017-08-25 17:31:23,205 INFO  [log] node named 'status' has content :
+2017-08-25 17:31:23,206 INFO  [log] Your request is being processed
+2017-08-25 17:31:23,206 INFO  [log] node named 'clientId' has content :
+2017-08-25 17:31:23,206 INFO  [log] 131
+2017-08-25 17:31:23,206 INFO  [log] node named 'amount' has content :
+2017-08-25 17:31:23,206 INFO  [log] 1000
+2017-08-25 17:31:23,206 INFO  [log] node named 'currentDayAmount' has content :
+2017-08-25 17:31:23,206 INFO  [log] 30000
+2017-08-25 17:31:23,207 INFO  [log] DONE
+2017-08-25 17:31:23,240 INFO  [log] CHANGED
+2017-08-25 17:31:24,004 INFO  [log] START
+2017-08-25 17:31:24,005 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 17:31:24,007 INFO  [log] context.expand(propertySpec) : <soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+   <soapenv:Body>
+      <NS1:cardTransactRs xmlns:NS1="http://ib.novy.com">
+         <NS1:guid>39cafb9f-7d46-441c-9dfb-708467bfa162</NS1:guid>
+         <NS1:status>Your request is being processed</NS1:status>
+         <NS1:clientId>131</NS1:clientId>
+         <NS1:amount>1000</NS1:amount>
+         <NS1:currentDayAmount>31000</NS1:currentDayAmount>
+      </NS1:cardTransactRs>
+   </soapenv:Body>
+</soapenv:Envelope>
+2017-08-25 17:31:24,011 INFO  [log] node named 'Envelope' has content :
+2017-08-25 17:31:24,011 INFO  [log] 39cafb9f-7d46-441c-9dfb-708467bfa162Your request is being processed131100031000
+2017-08-25 17:31:24,011 INFO  [log] node named 'Body' has content :
+2017-08-25 17:31:24,011 INFO  [log] 39cafb9f-7d46-441c-9dfb-708467bfa162Your request is being processed131100031000
+2017-08-25 17:31:24,011 INFO  [log] node named 'cardTransactRs' has content :
+2017-08-25 17:31:24,011 INFO  [log] 39cafb9f-7d46-441c-9dfb-708467bfa162Your request is being processed131100031000
+2017-08-25 17:31:24,011 INFO  [log] node named 'guid' has content :
+2017-08-25 17:31:24,012 INFO  [log] 39cafb9f-7d46-441c-9dfb-708467bfa162
+2017-08-25 17:31:24,012 INFO  [log] node named 'status' has content :
+2017-08-25 17:31:24,012 INFO  [log] Your request is being processed
+2017-08-25 17:31:24,012 INFO  [log] node named 'clientId' has content :
+2017-08-25 17:31:24,012 INFO  [log] 131
+2017-08-25 17:31:24,012 INFO  [log] node named 'amount' has content :
+2017-08-25 17:31:24,012 INFO  [log] 1000
+2017-08-25 17:31:24,013 INFO  [log] node named 'currentDayAmount' has content :
+2017-08-25 17:31:24,013 INFO  [log] 31000
+2017-08-25 17:31:24,013 INFO  [log] DONE
+2017-08-25 17:31:24,013 INFO  [log] CHANGED
+2017-08-25 17:38:16,455 INFO  [log] START
+2017-08-25 17:38:16,542 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 17:38:16,653 INFO  [log] DONE
+2017-08-25 17:45:32,997 INFO  [log] START
+2017-08-25 17:45:33,070 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 17:48:34,470 INFO  [log] START
+2017-08-25 17:48:34,551 INFO  [log] propertySpec : ${StepOne#Response}
+2017-08-25 17:50:36,466 INFO  [log] START
+2017-08-25 17:53:02,244 INFO  [log] START
+2017-08-25 17:56:23,142 INFO  [log] START
+2017-08-25 17:56:23,345 INFO  [log] DONE
+2017-08-25 17:56:23,369 INFO  [log] CHANGED
+2017-08-25 17:56:23,942 INFO  [log] START
+2017-08-25 17:56:23,947 INFO  [log] DONE
+2017-08-25 17:56:23,947 INFO  [log] CHANGED
+2017-08-25 18:06:52,939 INFO  [log] START
+2017-08-25 18:06:53,149 INFO  [log] DONE
+2017-08-25 18:06:53,174 INFO  [log] CHANGED
+2017-08-25 18:11:19,342 INFO  [log] START
+2017-08-25 18:11:20,833 INFO  [log] DONE
+2017-08-25 18:11:20,861 INFO  [log] CHANGED
+2017-08-25 18:11:23,670 INFO  [log] START
+2017-08-25 18:11:23,676 INFO  [log] DONE
+2017-08-25 18:11:23,731 INFO  [log] CHANGED
+2017-08-25 18:14:38,481 INFO  [log] START
+2017-08-25 18:14:38,638 INFO  [log] DONE
+2017-08-25 18:14:38,656 INFO  [log] CHANGED
+2017-08-25 18:14:39,391 INFO  [log] START
+2017-08-25 18:14:39,395 INFO  [log] DONE
+2017-08-25 18:14:39,396 INFO  [log] CHANGED
+2017-08-25 18:18:43,944 INFO  [log] DONE
+2017-08-25 18:18:44,040 INFO  [log] CHANGE
+2017-08-25 18:18:44,949 INFO  [log] DONE
+2017-08-25 18:18:44,949 INFO  [log] CHANGE
+2017-08-25 18:21:30,648 INFO  [log] DONE
+2017-08-25 18:21:30,716 INFO  [log] CHANGE
+2017-08-25 18:21:31,561 INFO  [log] DONE
+2017-08-25 18:21:31,562 INFO  [log] CHANGE
+2017-08-25 18:28:20,738 INFO  [log] DONE
+2017-08-25 18:28:20,825 INFO  [log] CHANGE
+2017-08-25 18:34:11,301 INFO  [log] DONE
+2017-08-25 18:34:11,368 INFO  [log] CHANGE
+2017-08-25 18:36:00,362 INFO  [log] DONE
+2017-08-25 18:36:00,447 INFO  [log] CHANGE
+2017-08-25 18:36:01,207 INFO  [log] DONE
+2017-08-25 18:36:01,208 INFO  [log] CHANGE
+2017-08-25 18:38:44,591 INFO  [log] DONE
+2017-08-25 18:38:44,689 INFO  [log] CHANGE
+2017-08-25 18:38:45,594 INFO  [log] DONE
+2017-08-25 18:38:45,595 INFO  [log] CHANGE
+2017-08-25 18:50:59,501 INFO  [log] DONE
+2017-08-25 18:50:59,645 INFO  [log] CHANGE
+2017-08-25 18:51:00,327 INFO  [log] DONE
+2017-08-25 18:51:00,327 INFO  [log] CHANGE
+2017-08-25 18:59:17,727 INFO  [log] DONE
+2017-08-25 18:59:17,820 INFO  [log] CHANGE
+2017-08-25 19:01:37,588 INFO  [log] DONE
+2017-08-25 19:01:38,436 INFO  [log] CHANGE
+2017-08-25 19:14:04,296 INFO  [log] DONE
+2017-08-25 19:14:04,571 INFO  [log] CHANGE
+2017-08-25 19:24:18,981 INFO  [log] DONE
+2017-08-25 19:24:19,095 INFO  [log] CHANGE
+2017-08-25 19:30:46,757 INFO  [log] DONE
+2017-08-25 19:30:46,825 INFO  [log] CHANGE
+2017-08-28 13:37:20,770 INFO  [log] START
+2017-08-28 13:37:21,309 INFO  [log] DONE
+2017-08-28 13:37:21,355 INFO  [log] CHANGED
+2017-08-28 13:38:08,703 INFO  [log] START
+2017-08-28 13:38:08,894 INFO  [log] DONE
+2017-08-28 13:38:08,913 INFO  [log] CHANGED
+2017-08-28 13:49:49,366 INFO  [log] START
+2017-08-28 13:49:49,629 INFO  [log] DONE
+2017-08-28 13:49:49,652 INFO  [log] CHANGED
+2017-08-28 13:54:01,288 INFO  [log] START
+2017-08-28 13:54:01,477 INFO  [log] DONE
+2017-08-28 13:54:01,494 INFO  [log] CHANGED
+2017-08-28 13:57:53,020 INFO  [log] START
+2017-08-28 13:57:53,217 INFO  [log] DONE
+2017-08-28 13:57:53,264 INFO  [log] CHANGED
+2017-08-28 14:00:27,749 INFO  [log] START
+2017-08-28 14:00:30,430 INFO  [log] DONE
+2017-08-28 14:00:30,503 INFO  [log] CHANGED
+2017-08-28 14:25:00,138 INFO  [log] START
+2017-08-28 14:25:00,820 INFO  [log] DONE
+2017-08-28 14:25:00,859 INFO  [log] CHANGED
+2017-08-28 14:48:23,786 INFO  [log] START
+2017-08-28 14:48:24,491 INFO  [log] DONE
+2017-08-28 14:48:24,520 INFO  [log] CHANGED
+2017-08-28 15:02:08,887 INFO  [log] START
+2017-08-28 15:17:10,150 INFO  [log] START
+2017-08-28 15:17:11,840 INFO  [log] DONE
+2017-08-28 15:17:11,900 INFO  [log] CHANGED
+2017-08-28 15:18:38,982 INFO  [log] START
+2017-08-28 15:23:32,229 INFO  [log] START
+2017-08-28 15:24:51,810 INFO  [log] START
+2017-08-28 15:27:38,870 INFO  [log] START
+2017-08-28 15:49:05,087 INFO  [log] START
+2017-08-28 15:49:05,615 INFO  [log] DONE
+2017-08-28 15:49:05,656 INFO  [log] CHANGED
+2017-08-28 16:06:15,720 INFO  [log] START
+2017-08-28 16:06:16,057 INFO  [log] DONE
+2017-08-28 16:06:16,082 INFO  [log] CHANGED
+2017-08-28 16:13:58,764 INFO  [log] START
+2017-08-28 16:14:00,033 INFO  [log] DONE
+2017-08-28 16:14:00,064 INFO  [log] CHANGED

@@ -1,0 +1,88 @@
+
+
+CREATE COMPUTE MODULE FROM_PROCESSING_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN	
+		--CALL CopyEntireMessage();
+		CALL CopyMessageHeaders();
+		DECLARE inBody REFERENCE TO InputRoot.XMLNSC.ct:CheckValidityResponse;
+		
+		DECLARE CLIENT_ID CHARACTER;
+		DECLARE AMOUNT INT;
+		DECLARE CURRENT_DAY_AMOUNT INT;
+		DECLARE GUID CHARACTER;
+		DECLARE STATUS CHARACTER;
+		SET STATUS = inBody.ct:Status;
+		SET GUID = inBody.ct:guid;
+		DECLARE messageId_blob BLOB;
+		SET messageId_blob = CAST(SUBSTRING(GUID FROM 1 FOR 24) AS BLOB CCSID 1208);
+		SET OutputRoot.MQMD.MsgId = messageId_blob;
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)guid = GUID;
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)processingStage = 'OUT';
+		
+		
+		SET AMOUNT = THE(SELECT ITEM A.AMOUNT FROM Database.REQUEST_STATUS AS A WHERE A.GUID = GUID);
+		
+		SET CLIENT_ID = THE(SELECT ITEM A.CLIENT_ID FROM Database.REQUEST_STATUS AS A WHERE A.GUID = FIELDVALUE(inBody.ct:guid));
+		SET OutputRoot.XMLNSC.ib:cardTransactRs.ib:guid = GUID;
+		DECLARE outBody REFERENCE TO OutputRoot.XMLNSC.ib:cardTransactRs;
+		IF STATUS = 'OK' THEN	
+			SET outBody.ib:status = 'Your request is being processed';					
+			SET outBody.ib:clientId = CLIENT_ID;
+			SET outBody.ib:amount = AMOUNT;
+			SET outBody.ib:currentDayAmount = getCurrentDayAmount(CLIENT_ID);			
+		ELSE
+			THROW USER EXCEPTION MESSAGE 772 VALUES ('Processing has rejected Your request');
+		END IF;
+		IF (checkCurrentDayAmmount(CLIENT_ID, AMOUNT) = FALSE) THEN
+			THROW USER EXCEPTION MESSAGE 778 VALUES ('You have exceeded maximum transaction amount through one day. The limit is 100000');
+		END IF;
+		
+		PROPAGATE TO TERMINAL 'out' DELETE NONE;
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)processingStage = 'INTREQ';
+		SET outBody.ib:respQueue = 'PROCESSING.OUT';
+		SET OutputLocalEnvironment.TimeoutRequest.Action = 'SET'; 
+		SET OutputLocalEnvironment.TimeoutRequest.Identifier = 	GUID;
+		SET OutputLocalEnvironment.TimeoutRequest.Count= getNumber(GUID);
+		SET OutputLocalEnvironment.TimeoutRequest.Interval = getInterval(GUID);
+		PROPAGATE TO TERMINAL 'out2';
+		RETURN FALSE;
+	END;
+	
+		
+	CREATE FUNCTION getInterval(IN GUID CHARACTER) RETURNS INT
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.getInterval";
+	
+	CREATE FUNCTION getNumber(IN GUID CHARACTER) RETURNS INT
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.getNumber";
+	
+	
+	CREATE FUNCTION checkCurrentDayAmmount(IN mesId CHARACTER, IN amount INT) RETURNS BOOLEAN
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.checkCurrentDayAmmount";
+	
+	CREATE FUNCTION getCurrentDayAmount(IN clientId CHARACTER) RETURNS INT
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.getCurrentDayAmount";
+	
+	
+	CREATE PROCEDURE cacheCurrentDayAmount(IN clientId CHARACTER, IN amount CHARACTER)
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.cacheCurrentDayAmount";
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

@@ -1,0 +1,30 @@
+
+
+Importing file: C:\Users\aklimov\Desktop\Ex4_Examples\SendSMS.wsdl
+
+
+The following is a list of WS-I warning messages found when importing:
+XSD: The target namespace 'http://www.bank.ru/CheckTransferService/' of the resolved schema conflicts with that of the including schema, Line: 8, Column: 4
+WSDL: The 'SendSMSBatch' element referenced by the parameters part cannot be resolved., Line: 12, Column: 5
+WSDL: The 'SendSMSBatchResponse' element referenced by the parameters part cannot be resolved., Line: 15, Column: 5
+
+
+The WSDL import will proceed with bindings SendSMSSOAP.
+Creating wsdl schema document for file:///C:/Users/aklimov/Desktop/Ex4_Examples/SendSMS.wsdl.
+Parsing wsdl binding {http://www.example.org/SendSMS/}SendSMSSOAP.
+Parsing wsdl binding input SendSMSBatch.
+Parsing wsdl binding output SendSMSBatch.
+Processing doc style for operation SendSMSBatch.
+Populating WSDL schema SendSMS.xsd.
+Removing unnecessary import statement with namespace CheckTransferService.xsd from schema SendSMS_InlineSchema1.xsd.  This statement was not resolved and is never used.
+Creating file SendSMS.xsd in the workspace.
+Creating file /SMS_SERVICE/CheckTransferService.xsd in the workspace.
+Copying source WSDL SendSMS.wsdl to SendSMS.wsdl.
+
+Elapsed time processing this message definition file: 2.069 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

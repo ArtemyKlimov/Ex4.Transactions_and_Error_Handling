@@ -1,0 +1,28 @@
+
+
+Importing file: C:\Users\aklimov\Desktop\Ex4_Examples\CheckTransferService.wsdl
+
+
+The following is a list of WS-I warning messages found when importing:
+XSD: The namespace 'http://www.bank.ru/CheckTransferService/' conflicts with that of the importing schema, Line: 8, Column: 3
+
+
+The WSDL import will proceed with bindings CheckTransferServiceSOAP.
+Creating wsdl schema document for file:///C:/Users/aklimov/Desktop/Ex4_Examples/CheckTransferService.wsdl.
+Parsing wsdl binding {http://www.bank.ru/CheckTransferService/}CheckTransferServiceSOAP.
+Parsing wsdl binding input CheckValidity.
+Parsing wsdl binding output CheckValidity.
+Processing doc style for operation CheckValidity.
+Populating WSDL schema CheckTransferService_wsdl.xsd.
+Removing unnecessary import statement with namespace http://www.bank.ru/CheckTransferService/ from schema CheckTransferService_InlineSchema1.xsd.  This statement was not resolved and is never used.
+Creating file CheckTransferService_wsdl.xsd in the workspace.
+Creating file /PROCESSING.IN/CheckTransferService.xsd in the workspace.
+Copying source WSDL CheckTransferService.wsdl to CheckTransferService.wsdl.
+
+Elapsed time processing this message definition file: 1.35 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

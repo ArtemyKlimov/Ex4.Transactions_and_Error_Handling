@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="CARD_TRANSFER" targetNamespace="http://www.example.org/CARD_TRANSFER/" xmlns:nv="http://ib.novy.com" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.example.org/CARD_TRANSFER/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="CARD_TRANSFERSOAP12" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  
+  <wsdl:types>
+    <xsd:schema>
+		<xsd:import namespace="http://ib.novy.com" schemaLocation="CARD_TRANSFER.xsd"/>
+	</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="cardTransactRq">
+    <wsdl:part element="nv:cardTransactRq" name="cardTransactRq"/>
+  </wsdl:message>
+  <wsdl:message name="cardTransactRs">
+    <wsdl:part element="nv:cardTransactRs" name="cardTransactRs"/>
+  </wsdl:message>
+  <wsdl:message name="statusRq">
+    <wsdl:part element="nv:getStatusRq" name="statusRq"/>
+  </wsdl:message>
+  <wsdl:message name="statusRs">
+    <wsdl:part element="nv:getStatusRs" name="statusRs"/>
+  </wsdl:message>
+  <wsdl:portType name="CARD_TRANSFER">
+		<wsdl:operation name="POST_REQUEST">
+      		<wsdl:input message="tns:cardTransactRq"/>
+      		<wsdl:output message="tns:cardTransactRs"/>
+    	</wsdl:operation>
+    	<wsdl:operation name="GET_REQUEST_STATUS">
+      		<wsdl:input message="tns:statusRq"/>
+      		<wsdl:output message="tns:statusRs"/>
+    	</wsdl:operation>
+    </wsdl:portType>
+  <wsdl:binding name="CARD_TRANSFERSOAP12" type="tns:CARD_TRANSFER">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+	 <wsdl:operation name="POST_REQUEST">
+   		<soap12:operation soapAction="http://www.example.org/CARD_TRANSFER/POST_REQUEST"/>
+   		<wsdl:input>
+     		<soap12:body use="literal"/>
+   		</wsdl:input>
+   		<wsdl:output>
+     		<soap12:body use="literal"/>
+   		</wsdl:output>
+ 	</wsdl:operation>
+   	<wsdl:operation name="GET_REQUEST_STATUS">
+     		<soap12:operation soapAction="http://www.example.org/CARD_TRANSFER/GET_REQUEST_STATUS"/>
+     		<wsdl:input>
+       		<soap12:body use="literal"/>
+     		</wsdl:input>
+     		<wsdl:output>
+       		<soap12:body use="literal"/>
+     		</wsdl:output>
+   	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CARD_TRANSFER">
+    <wsdl:port binding="tns:CARD_TRANSFERSOAP12" name="CARD_TRANSFERSOAP12">
+      <soap12:address location="http://localhost:7800/CARD_TRANSFER"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

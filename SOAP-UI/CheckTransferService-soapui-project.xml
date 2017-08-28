@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="3a8e4dec-38d2-489d-9fcb-8da9a2ddb019" activeEnvironment="Default" name="CheckTransferService" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="5e4b9510-a34e-4840-a2e6-c8ee11ef4db5" wsaVersion="NONE" name="CheckTransferServiceSOAP" type="wsdl" bindingName="{http://www.bank.ru/CheckTransferService/}CheckTransferServiceSOAP" soapVersion="1_1" anonymous="optional" definition="file:/C:/LocalRepo/EX4/PROCESSING.IN/CheckTransferService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\LocalRepo\EX4\PROCESSING.IN\CheckTransferService.wsdl"><con:part><con:url>file:\C:\LocalRepo\EX4\PROCESSING.IN\CheckTransferService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CheckTransferService" targetNamespace="http://www.bank.ru/CheckTransferService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ct="http://www.bank.ru/CheckTransferService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="CheckTransferServiceSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.bank.ru/CheckTransferService/">
+      <xsd:include schemaLocation="CheckTransferService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="CheckValidityRequest">
+    <wsdl:part element="ct:CheckValidity" name="CheckValidityRequest"/>
+  </wsdl:message>
+  <wsdl:message name="CheckValidityResponse">
+    <wsdl:part element="ct:CheckValidityResponse" name="CheckValidityRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="CheckTransferService">
+    <wsdl:operation name="CheckValidity">
+      <wsdl:input message="ct:CheckValidityRequest"/>
+      <wsdl:output message="ct:CheckValidityResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CheckTransferServiceSOAP" type="ct:CheckTransferService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CheckValidity">
+      <soap:operation soapAction="http://www.bank.ru/CheckTransferService/CheckValidity"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CheckTransferService">
+    <wsdl:port binding="ct:CheckTransferServiceSOAP" name="CheckTransferServiceSOAP">
+      <soap:address location="http://localhost:7803/CheckTransferService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\LocalRepo\EX4\PROCESSING.IN\CheckTransferService.xsd</con:url><con:content><![CDATA[<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.bank.ru/CheckTransferService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://www.bank.ru/CheckTransferService/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+  <!---->
+  <xsd:element ibmSchExtn:docRoot="true" name="CheckValidity" type="ct:CheckValidity"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="CheckValidityResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="guid" type="ct:guid"/>
+        <xsd:element name="Status" type="ct:Status"/>
+        <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ct:ErrorType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CheckValidity">
+    <xsd:sequence>
+      <xsd:element name="CustomerId" type="xsd:ID"/>
+      <xsd:element name="PhoneNumber" type="ct:PhoneNumber"/>
+      <xsd:element name="Amount" type="xsd:int"/>
+      <xsd:element name="guid" type="ct:guid"/>
+      <xsd:element name="FromCard" type="ct:CardType"/>
+      <xsd:element name="ToCard" type="ct:CardType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="guid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PhoneNumber">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d{10,12}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Status">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="OK"/>
+      <xsd:enumeration value="Error"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="ErrorType">
+    <xsd:sequence>
+      <xsd:element name="Code" type="ct:Code"/>
+      <xsd:element name="Description" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="Code">
+    <xsd:restriction base="xsd:int">
+      <xsd:enumeration value="0"/>
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="CardType">
+    <xsd:sequence>
+      <xsd:element name="FirstName" type="xsd:string"/>
+      <xsd:element name="LastName" type="xsd:string"/>
+      <xsd:element name="Number" type="ct:Number"/>
+      <xsd:element name="ValidMonth" type="ct:Month"/>
+      <xsd:element name="ValidYear" type="ct:Year"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="Month">
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="1"/>
+      <xsd:maxInclusive value="12"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Year">
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="2017"/>
+      <xsd:maxInclusive value="2099"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Number">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\d{16,18}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7803/CheckTransferService</con:endpoint></con:endpoints><con:operation id="4ced1753-72fa-4a7e-9c14-aff82316b273" isOneWay="false" action="http://www.bank.ru/CheckTransferService/CheckValidity" name="CheckValidity" bindingOperationName="CheckValidity" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f48eadb7-9e76-4265-b7b8-bf7d6ba6708d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7803/CheckTransferService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<NS1:CheckValidity xmlns:NS1="http://www.bank.ru/CheckTransferService/">
+			<NS1:CustomerId>118</NS1:CustomerId>
+			<NS1:PhoneNumber>79101789827</NS1:PhoneNumber>
+			<NS1:Amount>500</NS1:Amount>
+			<NS1:guid>1d123eed-552c-4e80-9e25-50c60c04d7c3</NS1:guid>
+			<NS1:FromCard>
+				<NS1:FirstName>Ivan</NS1:FirstName>
+				<NS1:LastName>Petrov</NS1:LastName>
+				<NS1:Number>1111222233332790</NS1:Number>
+				<NS1:ValidMonth>7</NS1:ValidMonth>
+				<NS1:ValidYear>2019</NS1:ValidYear>
+			</NS1:FromCard>
+			<NS1:ToCard>
+				<NS1:FirstName>Oleg</NS1:FirstName>
+				<NS1:LastName>Sidorov</NS1:LastName>
+				<NS1:Number>5555666677778888</NS1:Number>
+				<NS1:ValidMonth>8</NS1:ValidMonth>
+				<NS1:ValidYear>2021</NS1:ValidYear>
+			</NS1:ToCard>
+		</NS1:CheckValidity>
+	</soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.bank.ru/CheckTransferService/CheckValidity"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="CheckTransferService" targetNamespace="http://www.bank.ru/CheckTransferService/" xmlns:ct="http://www.bank.ru/CheckTransferService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="CheckTransferServiceSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.bank.ru/CheckTransferService/">
+            <xsd:include schemaLocation="CheckTransferService.xsd"/>
+        </xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="CheckValidityRequest">
+		<wsdl:part element="ct:CheckValidity" name="CheckValidityRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CheckValidityResponse">
+		<wsdl:part element="ct:CheckValidityResponse" name="CheckValidityRequest"/>
+	</wsdl:message>
+	<wsdl:portType name="CheckTransferService">
+		<wsdl:operation name="CheckValidity">
+			<wsdl:input message="ct:CheckValidityRequest"/>
+			<wsdl:output message="ct:CheckValidityResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CheckTransferServiceSOAP" type="ct:CheckTransferService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CheckValidity">
+			<soap:operation soapAction="http://www.bank.ru/CheckTransferService/CheckValidity"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CheckTransferService">
+		<wsdl:port binding="ct:CheckTransferServiceSOAP" name="CheckTransferServiceSOAP">
+			<soap:address location="http://localhost:7803/CheckTransferService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

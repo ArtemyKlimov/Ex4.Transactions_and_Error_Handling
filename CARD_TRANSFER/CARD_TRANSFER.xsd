@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ib.novy.com" xmlns:ib="http://ib.novy.com">
+			
+	<!-- 
+	<xsd:element name="cardTransactRq" type ="ib:cardTransactRq"/>
+	<xsd:element name="cardTransactRs" type ="ib:cardTransactRs"/>
+	-->
+	<xsd:element name="getStatusRs" type="ib:getStatusRs"/>
+	<xsd:element name="getStatusRq" type="ib:getStatusRq"/>
+	<xsd:element name="cardTransactRq" type ="ib:cardTransactRq"/>
+	<xsd:element name="cardTransactRs" type ="ib:cardTransactRs"/>
+	
+	<xsd:complexType name="cardTransactRs">
+		<xsd:sequence>
+			<xsd:element name="guid" type="ib:guid"/>
+			<xsd:element name="status" type="ib:status"/>
+			<xsd:element maxOccurs="1" minOccurs="0" name="code" type="ib:code"/>
+			<xsd:element maxOccurs="1" minOccurs="0" name="desc" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="getStatusRq">
+		<xsd:sequence>
+			<xsd:element name="guid" type="ib:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="getStatusRs">
+		<xsd:sequence>
+			<xsd:element name="guid" type="ib:guid"/>
+			<xsd:element name="status" type="ib:status"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="code">
+		<xsd:restriction base="xsd:int">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="status">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="cardTransactRq">
+		<xsd:sequence>
+			
+			<xsd:element name="clientId" type="ib:clientId"/>
+			<xsd:element name="phoneNum" type="ib:phoneNum"/>
+			<xsd:element name="amount" type="ib:amount"/>
+			<xsd:element name="sender" type="ib:cardInfo"/>
+			<xsd:element name="receiver" type="ib:cardInfo"/>
+			<xsd:element name="guid" type="ib:guid" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="cardInfo">
+		<xsd:sequence>
+			<xsd:element name="cardNo" type="ib:cardNo"/>
+			<xsd:element name="cardOwner" type="ib:cardOwner"/>
+			<xsd:element name="validThru" type="ib:validThru"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="clientId">
+		<xsd:restriction base="xsd:int"/>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="phoneNum">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{10,12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="amount">
+		<xsd:restriction base="xsd:int"/> <!--should we check here the amount < 20000 ? -->
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="cardNo">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{16,18}"/>
+		</xsd:restriction>		
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="cardOwner">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="validThru">
+		<xsd:restriction base="xsd:string">
+		   <xsd:pattern value="[0,1]{1}[0-9]{1}.[0-9]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+			
+</xsd:schema>

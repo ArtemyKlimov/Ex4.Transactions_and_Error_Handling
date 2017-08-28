@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.bank.ru/CheckTransferService/" xmlns:ct="http://www.bank.ru/CheckTransferService/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+			
+<!--
+
+-->
+	<xsd:element ibmSchExtn:docRoot="true" name="CheckValidity" type="ct:CheckValidity"/>
+	
+	<xsd:element ibmSchExtn:docRoot="true" name="CheckValidityResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="guid" type="ct:guid"/>
+				<xsd:element name="Status" type="ct:Status"/>
+				<xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ct:ErrorType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="CheckValidity">
+		<xsd:sequence>
+			<xsd:element name="CustomerId" type="xsd:ID"/>
+			<xsd:element name="PhoneNumber" type="ct:PhoneNumber"/>
+			<xsd:element name="Amount" type="xsd:int"/>
+			<xsd:element name="guid" type="ct:guid"/>
+			<xsd:element name="FromCard" type="ct:CardType"/>
+			<xsd:element name="ToCard" type="ct:CardType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="PhoneNumber">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{10,12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Status">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OK"/>
+			<xsd:enumeration value="Error"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="ErrorType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="ct:Code"/>
+			<xsd:element name="Description" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="Code">
+		<xsd:restriction base="xsd:int">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="CardType">
+		<xsd:sequence>
+			<xsd:element name="FirstName" type="xsd:string"/>
+			<xsd:element name="LastName" type="xsd:string"/>
+			<xsd:element name="Number" type="ct:Number"/>
+			<xsd:element name="ValidMonth" type="ct:Month"/>
+			<xsd:element name="ValidYear" type="ct:Year"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="Month">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Year">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="2017"/>
+			<xsd:maxInclusive value="2099"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Number">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{16,18}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,12 @@
+Status: FAILED
+Time Taken: 583
+Size: 0
+Timestamp: Fri Aug 25 17:53:01 MSK 2017
+TestStep: getGUID
+Error:groovy.lang.MissingMethodException: No signature of method: groovy.util.slurpersupport.NodeChildren.info() is applicable for argument types: (java.lang.String) values: [DONE]
+Possible solutions: find(), any(), find(groovy.lang.Closure), find(groovy.lang.Closure), is(java.lang.Object), any(groovy.lang.Closure)
+
+----------------- Messages ------------------------------
+groovy.lang.MissingMethodException: No signature of method: groovy.util.slurpersupport.NodeChildren.info() is applicable for argument types: (java.lang.String) values: [DONE]
+Possible solutions: find(), any(), find(groovy.lang.Closure), find(groovy.lang.Closure), is(java.lang.Object), any(groovy.lang.Closure)
+error at line: 39

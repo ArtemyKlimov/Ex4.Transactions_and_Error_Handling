@@ -1,0 +1,26 @@
+DECLARE nsc NAMESPACE 'http://ib.novy.com';
+DECLARE soap NAMESPACE 'http://www.w3.org/2003/05/soap-envelope';
+
+CREATE COMPUTE MODULE TIMEOUT_ERROR_HANDLER_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN	
+		DECLARE originalMessage BLOB;
+				
+		SET originalMessage = InputLocalEnvironment.SOAP.Input.Timeout.OriginalInboundMessage; 
+		CREATE LASTCHILD OF OutputLocalEnvironment.Variables DOMAIN('XMLNSC') PARSE(originalMessage OPTIONS XMLNSC.MixedContentRetainAll);
+		DECLARE InMessage REFERENCE TO OutputLocalEnvironment.Variables.XMLNSC.soap:Envelope.soap:Body.nsc:*;
+		DECLARE clientId CHARACTER InMessage.nsc:clientId;
+		DECLARE cardNo CHARACTER InMessage.nsc:sender.nsc:cardNo;
+		DECLARE guid CHARACTER InMessage.nsc:guid;
+	
+		SET OutputRoot.MQMD.Format = 'MQRFH2';
+		--SET OutputRoot.MQMD.MsgId = CAST(SUBSTRING(messageId FROM 1 FOR 24) AS BLOB CCSID 1208);
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)clientId = clientId;
+		DECLARE usrRef REFERENCE TO OutputRoot.MQRFH2.usr;
+		SET usrRef.(MQRFH2.Field)cardNo = cardNo;
+		SET usrRef.(MQRFH2.Field)guid = guid;
+		SET usrRef.(MQRFH2.Field)time = CURRENT_TIMESTAMP;
+		SET usrRef.(MQRFH2.Field)descr = InputRoot.SOAP.Body.soap:Fault.soap:Detail.text;
+		RETURN TRUE;
+	END;
+END MODULE;

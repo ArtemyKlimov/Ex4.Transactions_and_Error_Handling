@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmSOAPExtract.msgnode="ComIbmSOAPExtract.msgnode" xmlns:ComIbmSOAPInput.msgnode="ComIbmSOAPInput.msgnode" xmlns:ComIbmSOAPReply.msgnode="ComIbmSOAPReply.msgnode" xmlns:ComIbmTrace.msgnode="ComIbmTrace.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="WEB_SERVICE_PROCESSING.msgflow"
+    nsPrefix="WEB_SERVICE_PROCESSING.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="WEB_SERVICE_PROCESSING" bundleName="WEB_SERVICE_PROCESSING" pluginId="PROCESSING.IN"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PROCESSING.IN/icons/full/obj16/WEB_SERVICE_PROCESSING.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PROCESSING.IN/icons/full/obj30/WEB_SERVICE_PROCESSING.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmSOAPReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="736,185" validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="SOAP Reply"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="506,83" destination="file" filePath="C:\test\ex4\ProcessingNoValidation.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="983,59" destination="file" filePath="C:\test\ex4\ProcessingOK.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="281,292" destination="file" filePath="C:\test\ex4\ProcessingCatch.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
+        <translation xmi:type="utility:ConstantString" string="Trace2"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPExtract.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="290,181">
+        <translation xmi:type="utility:ConstantString" string="SOAP Extract"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_12" location="504,184" computeExpression="esql://routine/#INadapterSOAP_Compute.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="Compute"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="88,184" wsdlFileName="CheckTransferService.wsdl" selectedPortType="CheckTransferService" selectedBinding="CheckTransferServiceSOAP" selectedPort="CheckTransferServiceSOAP" targetNamespace="http://www.bank.ru/CheckTransferService/" useHTTPTransport="true" urlSelector="/CheckTransferService" allowQueryWSDL="true" usingWsAddressing="true" populateLocalEnvWithWSAInfo="true" parserXmlnscBuildTreeUsingXMLSchema="false"
+          validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="SOAP Input"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_12" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

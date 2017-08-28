@@ -1,0 +1,33 @@
+
+
+Importing file: C:\Users\aklimov\Desktop\Ex4_Examples\CARD_TRANSFER.wsdl
+
+
+The following is a list of WS-I warning messages found when importing:
+WSDL: The 'cardTransactRq' element referenced by the cardTransactRq part cannot be resolved., Line: 21, Column: 5
+WSDL: The 'cardTransactRs' element referenced by the cardTransactRs part cannot be resolved., Line: 24, Column: 5
+WSDL: The 'statusRq' element referenced by the statusRq part cannot be resolved., Line: 27, Column: 5
+WSDL: The 'statusRs' element referenced by the statusRs part cannot be resolved., Line: 30, Column: 5
+
+
+The WSDL import will proceed with bindings CARD_TRANSFERSOAP12.
+Creating wsdl schema document for file:///C:/Users/aklimov/Desktop/Ex4_Examples/CARD_TRANSFER.wsdl.
+Parsing wsdl binding {http://www.example.org/IBank/}CARD_TRANSFERSOAP12.
+Parsing wsdl binding input POST_REQUEST.
+Parsing wsdl binding output POST_REQUEST.
+Parsing wsdl binding input GET_REQUEST_STATUS.
+Parsing wsdl binding output GET_REQUEST_STATUS.
+Processing doc style for operation POST_REQUEST.
+Processing doc style for operation GET_REQUEST_STATUS.
+Populating WSDL schema CARD_TRANSFER_wsdl.xsd.
+Creating file CARD_TRANSFER_wsdl.xsd in the workspace.
+Creating file /cardTransact/CARD_TRANSFER.xsd in the workspace.
+Copying source WSDL CARD_TRANSFER.wsdl to CARD_TRANSFER.wsdl.
+
+Elapsed time processing this message definition file: 0.541 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SendSMS" targetNamespace="http://www.example.org/SendSMS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/SendSMS/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="SendSMSSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/SendSMS/">
+            <xsd:include schemaLocation="SMSService.xsd"/>
+        </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSMSBatchRequest">
+    <wsdl:part element="tns:SendSMSBatch" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSBatchResponse">
+    <wsdl:part element="tns:SendSMSBatchResponse" name="SendSMSBatchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SendSMS">
+    <wsdl:operation name="SendSMSBatch">
+      <wsdl:input message="tns:SendSMSBatchRequest"/>
+      <wsdl:output message="tns:SendSMSBatchResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SendSMSSOAP" type="tns:SendSMS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SendSMSBatch">
+      <soap:operation soapAction="http://www.example.org/SendSMS/SendSMSBatch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SendSMS">
+    <wsdl:port binding="tns:SendSMSSOAP" name="SendSMSSOAP">
+      <soap:address location="http://localhost:7802/SendSMS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

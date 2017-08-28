@@ -1,0 +1,47 @@
+
+
+CREATE COMPUTE MODULE SOAP_IN_GET_GUID
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--CALL CopyMessageHeaders();
+		--CALL CopyEntireMessage();
+		
+		DECLARE operationType CHARACTER;
+		SET operationType = InputLocalEnvironment.SOAP.Envelope.SOAP.Context.operation;
+		SET OutputRoot.Properties = InputRoot.Properties;
+		SET OutputRoot.MQMD = InputRoot.MQMD;
+		SET OutputRoot.MQMD.Format = 'MQHRF2';
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)operation = operationType;
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)processingStage = 'IN';
+		DECLARE GUID CHARACTER UUIDASCHAR;
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)guid = GUID;
+		SET OutputRoot.XMLNSC = InputRoot.XMLNSC;
+		IF operationType = 'POST_REQUEST' THEN	
+	--	SET OutputRoot.MQRFH2.Format = 'XMLNSC';		
+			SET OutputRoot.XMLNSC.*.ib:guid = GUID;
+		END IF;
+		DECLARE replyIdentifier CHARACTER;
+		SET replyIdentifier = CAST(InputLocalEnvironment.Destination.SOAP.Reply.ReplyIdentifier AS CHARACTER);
+		CALL cacheReplyIdentifier(GUID, replyIdentifier);
+		
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+	
+	CREATE PROCEDURE cacheReplyIdentifier(IN guid CHARACTER, IN repId CHARACTER)
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.cacheReplyIdentifier";
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

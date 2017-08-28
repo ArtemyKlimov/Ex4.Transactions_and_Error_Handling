@@ -1,0 +1,12 @@
+﻿.metadata/
+BARfiles
+**/bin/
+*.class
+GeneratedBarFiles/
+.gradle/
+*.iml
+**/build/
+release/4.4.8_20160317.rar
+test/Новый текстовый документ.txt
+.DS_Store
+TestClientBarFiles

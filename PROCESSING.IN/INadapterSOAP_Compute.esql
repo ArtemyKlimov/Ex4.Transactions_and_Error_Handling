@@ -1,0 +1,32 @@
+DECLARE ct NAMESPACE 'http://www.bank.ru/CheckTransferService/';
+CREATE COMPUTE MODULE INadapterSOAP_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		--CALL CopyEntireMessage();
+		SET OutputRoot.XMLNSC.ct:CheckValidityResponse.ct:guid = InputRoot.XMLNSC.ct:CheckValidity.ct:guid;
+		DECLARE clientId INTEGER InputRoot.XMLNSC.ct:CheckValidity.ct:CustomerId;
+		IF MOD(clientId, 3) = 0 THEN
+			SET OutputRoot.XMLNSC.ct:CheckValidityResponse.ct:Status = 'Error';
+		ELSE
+			SET OutputRoot.XMLNSC.ct:CheckValidityResponse.ct:Status = 'OK';
+		END IF;
+		
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

@@ -1,0 +1,22 @@
+
+
+Importing file: C:\LocalRepo\EX4\PROCESSING.IN\CheckTransferService.wsdl
+
+The WSDL import will proceed with bindings CheckTransferServiceSOAP.
+Creating wsdl schema document for file:///C:/LocalRepo/EX4/PROCESSING.IN/CheckTransferService.wsdl.
+Parsing wsdl binding {http://www.bank.ru/CheckTransferService/}CheckTransferServiceSOAP.
+Parsing wsdl binding input CheckValidity.
+Parsing wsdl binding output CheckValidity.
+Processing doc style for operation CheckValidity.
+Populating WSDL schema CheckTransferService_wsdl.xsd.
+Creating file CheckTransferService_wsdl.xsd in the workspace.
+Creating file /CARD_TRANSFER/CheckTransferService.xsd in the workspace.
+Copying source WSDL CheckTransferService.wsdl to CheckTransferService.wsdl.
+
+Elapsed time processing this message definition file: 0.358 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

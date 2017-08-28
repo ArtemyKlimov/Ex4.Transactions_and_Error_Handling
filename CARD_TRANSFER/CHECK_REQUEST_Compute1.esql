@@ -1,0 +1,45 @@
+
+
+CREATE COMPUTE MODULE CHECK_REQUEST_Compute1
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		DECLARE GUID CHARACTER InputRoot.XMLNSC.ct:CheckValidity.ct:guid;
+		SET OutputLocalEnvironment.TimeoutRequest.Action = 'SET'; 
+		SET OutputLocalEnvironment.TimeoutRequest.Identifier = GUID;
+		SET OutputLocalEnvironment.TimeoutRequest.Count=InputRoot.MQRFH2.usr.RequestNumber;
+		SET OutputLocalEnvironment.TimeoutRequest.Interval=InputRoot.MQRFH2.usr.RequestInterval;
+		SET OutputLocalEnvironment.TimeoutRequest.AllowOverwrite = TRUE;
+		CALL CopyEntireMessage();
+		SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)processingStage = 'INTREQ';
+	--	SET OutputRoot.MQMD.MsgId = CAST(SUBSTRING(GUID FROM 1 FOR 24) AS BLOB CCSID 1208);
+		CALL checkCardDayLimit();
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE checkCardDayLimit()
+	BEGIN ATOMIC
+		DECLARE CARD_NO CHARACTER InputRoot.XMLNSC.ct:CheckValidity.ct:FromCard.ct:Number;
+		DECLARE CURRENT_DAY_OPERATIONS_AMOUNT INTEGER;
+
+		SET CURRENT_DAY_OPERATIONS_AMOUNT = THE(SELECT SUM(A.AMOUNT) FROM Database.REQUEST_STATUS AS A WHERE A.REQUEST_DATE = CURRENT_DATE AND A.CARD_NO = CARD_NO);
+		IF CURRENT_DAY_OPERATIONS_AMOUNT > 50000 THEN
+			THROW USER EXCEPTION MESSAGE 779 VALUES ('Exceeded limit of one-card transactions through one day. Max value is 50000');
+		END IF;
+	--	SET OutputRoot.XMLNSC.ct:CheckValidity.ct:currentTodayAmount = CURRENT_DAY_OPERATIONS_AMOUNT;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

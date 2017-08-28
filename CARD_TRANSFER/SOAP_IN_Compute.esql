@@ -1,0 +1,113 @@
+DECLARE ib NAMESPACE 'http://ib.novy.com';
+DECLARE ct NAMESPACE 'http://www.bank.ru/CheckTransferService/';
+
+
+CREATE COMPUTE MODULE SOAP_IN_Compute
+	DECLARE RequestInterval EXTERNAL INT;
+	DECLARE RequestNumber EXTERNAL INT;
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		SET OutputRoot.MQMD = InputRoot.MQMD;
+		SET OutputRoot.MQRFH2 = InputRoot.MQRFH2;
+
+		DECLARE GUID CHARACTER;
+		DECLARE operationType CHARACTER InputRoot.MQRFH2.usr.operation;
+		IF operationType = 'POST_REQUEST' THEN
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)RequestInterval = RequestInterval;
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)RequestNumber = RequestNumber;
+						
+			DECLARE CLIENT_ID CHARACTER;
+			DECLARE AMOUNT INTEGER;
+			DECLARE CURRENT_DAY_AMOUNT INT;
+			DECLARE inBody REFERENCE TO InputRoot.XMLNSC.ib:cardTransactRq;
+			DECLARE cardFrom REFERENCE TO InputRoot.XMLNSC.ib:cardTransactRq.ib:sender;
+			DECLARE cardTo REFERENCE TO InputRoot.XMLNSC.ib:cardTransactRq.ib:receiver;
+			DECLARE PHONE_NUM CHARACTER inBody.ib:phoneNum;
+			DECLARE FROM_VALID_THRU CHARACTER;
+			DECLARE CARD_NO CHARACTER cardFrom.ib:cardNo;
+			SET CLIENT_ID = inBody.ib:clientId;
+			SET AMOUNT = inBody.ib:amount;
+			IF AMOUNT > 20000 THEN
+				THROW USER EXCEPTION MESSAGE 776 VALUES ('amount can not be more than 20000');
+			ELSEIF AMOUNT <= 0 THEN
+				THROW USER EXCEPTION MESSAGE 777 VALUES ('amount must be more than 0'); 
+			END IF;
+			SET GUID = InputRoot.MQRFH2.usr.guid;
+			SET OutputRoot.XMLNSC.ct:CheckValidity.ct:CustomerId = CLIENT_ID;
+			DECLARE outBody REFERENCE TO OutputRoot.XMLNSC.ct:CheckValidity;
+			SET outBody.ct:PhoneNumber = PHONE_NUM;
+			SET outBody.ct:Amount = AMOUNT;
+			SET outBody.ct:guid = GUID;
+			SET outBody.ct:FromCard.ct:FirstName = getFirstName(cardFrom.ib:cardOwner);
+			SET outBody.ct:FromCard.ct:LastName = getLastName(cardFrom.ib:cardOwner);
+			SET	outBody.ct:FromCard.ct:Number = CARD_NO;
+			SET outBody.ct:FromCard.ct:ValidMonth = getMonth(cardFrom.ib:validThru);
+			SET outBody.ct:FromCard.ct:ValidYear = getYear(cardFrom.ib:validThru);
+			SET outBody.ct:ToCard.ct:FirstName = getFirstName(cardTo.ib:cardOwner);
+			SET outBody.ct:ToCard.ct:LastName = getLastName(cardTo.ib:cardOwner);
+			SET outBody.ct:ToCard.ct:Number = cardTo.ib:cardNo;
+			SET outBody.ct:ToCard.ct:ValidMonth = getMonth(cardTo.ib:validThru);
+			SET outBody.ct:ToCard.ct:ValidYear = getYear(cardTo.ib:validThru);
+			
+	--		INSERT INTO Database.REQUEST_STATUS(GUID, CLIENT_ID, AMOUNT, DATETIME, REQUEST_STATUS, ALERT_STATUS, CARD_NO, REQUEST_DATE, PHONE_NUM) 
+	--									 VALUES(GUID, CLIENT_ID, AMOUNT, DATETIME, REQUEST_STATUS, ALERT_STATUS, CARD_NO, CURRENT_DATE, PHONE_NUM);
+			CALL cacheBrokerValues(GUID, RequestNumber, RequestInterval);
+			PROPAGATE TO TERMINAL 'out';
+		ELSEIF operationType = 'GET_REQUEST_STATUS' THEN
+			SET GUID = InputRoot.XMLNSC.ib:getStatusRq.ib:guid;
+			DECLARE STATUS CHARACTER;
+			SET STATUS = THE(SELECT ITEM A.REQUEST_STATUS FROM Database.REQUEST_STATUS AS A WHERE A.GUID = GUID);
+			SET OutputRoot.XMLNSC.ib:getStatusRs.ib:guid = GUID;			
+			
+			IF STATUS IS null THEN
+				THROW USER EXCEPTION MESSAGE 780 VALUES ('GUID "' || GUID ||'" has not been found');
+			END IF;
+			SET OutputRoot.XMLNSC.ib:getStatusRs.ib:status = STATUS;
+			IF STATUS = 'REJECTED' THEN
+				DECLARE DESCR CHARACTER;
+				SET DESCR = THE(SELECT ITEM A.ERROR_DESCR FROM Database.REQUEST_REJECTED AS A WHERE A.GUID = GUID);
+				SET OutputRoot.XMLNSC.ib:getStatusRs.ib:descr = DESCR;
+			END IF;
+			PROPAGATE TO TERMINAL 'out2';
+		END IF;
+		RETURN FALSE;
+	END;
+	
+	CREATE FUNCTION getMonth(IN origin CHARACTER) RETURNS CHARACTER
+	BEGIN
+		DECLARE result CHARACTER;
+		DECLARE origin_pattern CHARACTER 'MM.YY';
+		DECLARE dateTime TIMESTAMP;
+		DECLARE result_dateTime TIMESTAMP;
+		SET dateTime = CAST(origin AS TIMESTAMP FORMAT origin_pattern);
+		SET result = EXTRACT(MONTH FROM dateTime);
+		RETURN result;
+	END;
+	
+	CREATE FUNCTION getFirstName(IN cardOwner CHARACTER) RETURNS CHARACTER
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.Helper.getFirstName";
+	
+	CREATE FUNCTION getLastName(IN cardOwner CHARACTER) RETURNS CHARACTER
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.Helper.getLastName";
+	
+	CREATE PROCEDURE cacheBrokerValues(IN guid CHARACTER, IN requestNumber INT, IN requestInterval INT)
+	LANGUAGE JAVA
+	EXTERNAL NAME "util.GlobalCache.cacheBrokerValues";
+	
+	CREATE FUNCTION getYear(IN origin CHARACTER) RETURNS CHARACTER
+	BEGIN
+		DECLARE result CHARACTER;
+		DECLARE origin_pattern CHARACTER 'MM.YY';
+		DECLARE dateTime TIMESTAMP;
+		SET dateTime = CAST(origin AS TIMESTAMP FORMAT origin_pattern);
+		SET result = EXTRACT(YEAR FROM dateTime); 
+		RETURN result;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
