@@ -32,6 +32,8 @@ public class CardTransferTests {
     private String wrongClientId = "333";
     private String validAmount = "700";
     private String invalidAmount = "888";
+    private String wrongCardNoFormat = "12345";
+    private String tooLargeAmount = "21000";
     private String validCardNo = "1111222233332222";
     private String invalidCardNo = "11112";
     private String validPhoneNum = "79101785555";
@@ -71,10 +73,8 @@ public class CardTransferTests {
         testSuite = project.getTestSuiteByName("Tests");
     }
 
-
-
     @Test
-    public void verifyValidData() throws Exception {
+    public void verifyValidDataCase() throws Exception {
         project.setPropertyValue("cardNo", validCardNo);
         project.setPropertyValue("clientId", validClientId);
         project.setPropertyValue("expectedClientId", validClientId);
@@ -140,7 +140,7 @@ public class CardTransferTests {
     }
 
     @Test
-    public void verifyInvalidAmount() throws Exception {
+    public void verifyAmountNotMultipleOf100Case() throws Exception {
         project.setPropertyValue("cardNo", validCardNo);
         project.setPropertyValue("clientId", validClientId);
         project.setPropertyValue("expectedClientId", validClientId);
@@ -222,7 +222,7 @@ public class CardTransferTests {
     }
 
     @Test
-    public void verifyInvalidClientId() throws Exception {
+    public void verifyInvalidClientIdCase() throws Exception {
         project.setPropertyValue("cardNo", validCardNo);
         project.setPropertyValue("clientId", invalidClientId);
         project.setPropertyValue("expectedClientId", "");
@@ -236,13 +236,13 @@ public class CardTransferTests {
         List<TestSuite> testSuites = project.getTestSuiteList();
 
 
-        System.out.println("Running Test Suite: "+ testSuite.getName());
+        System.out.println("Running Test Suite: " + testSuite.getName());
         List<TestCase> testCases = testSuite.getTestCaseList();
         WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("ErrorTestCase");
 
         System.out.println("Running Test Case: " + testCase.getName());
 
-        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap() );
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap());
 
         runner.run();
         List results = runner.getResults();
@@ -252,14 +252,14 @@ public class CardTransferTests {
             int testStepNo = 1;
             while (it.hasNext()) {
                 TestStepResult thisResult = (TestStepResult) it.next();
-                System.out.println( "TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                System.out.println("TestStep № " + testStepNo + " : " + thisResult.getStatus());
                 String[] messages = thisResult.getMessages();
                 if (thisResult instanceof WsdlTestRequestStepResult) {
-                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult ) thisResult;
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
                     System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
                 }
                 if (messages != null && messages.length > 0) {
-                    for(String message : messages) {
+                    for (String message : messages) {
                         System.out.println("SOAUP UI Message: " + message);
                         assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
                     }
@@ -269,7 +269,7 @@ public class CardTransferTests {
         }
 
         String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
-        System.out.println("THIS IS PROPERTY_VALUE_GUID" + guid);
+        System.out.println("THIS IS PROPERTY_VALUE_GUID: " + guid);
 
         String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
         String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
@@ -292,5 +292,245 @@ public class CardTransferTests {
         System.out.print("Testing finished successfully");
     }
 
+    @Test
+    public void verifyTooLargeAmountCase() throws Exception {
+        project.setPropertyValue("cardNo", validCardNo);
+        project.setPropertyValue("clientId", validClientId);
+        project.setPropertyValue("amount", tooLargeAmount);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("statusError", statusError);
+        project.setPropertyValue("errorDescr", "amount can not be more than 20000");
+        project.setPropertyValue("erorCode", "776");
+        project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
 
+        System.out.println("Running Test Suite: " + testSuite.getName());
+
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("ErrorTestCase");
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap());
+
+        runner.run();
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println("TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for (String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+
+        String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
+        System.out.println("THIS IS PROPERTY_VALUE_GUID: " + guid);
+
+        String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        ResultSet result = statement.executeQuery(stmt_get_request_status);
+
+        while (result.next()) {
+            assertEquals(tooLargeAmount, result.getString("AMOUNT"));
+            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
+            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(stmt_get_rejected_request);
+        while (result.next()) {
+            assertEquals("776", result.getString("ERROR_CODE"));
+            assertEquals("amount can not be more than 20000", result.getString("ERROR_DESCR"));
+        }
+        System.out.print("Testing finished successfully");
+    }
+
+    @Test
+    public void verifyInvalidInputMessageFormat() throws Exception {
+        project.setPropertyValue("cardNo", wrongCardNoFormat);
+        project.setPropertyValue("clientId", validClientId);
+        project.setPropertyValue("amount", validAmount);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("statusError", statusError);
+        project.setPropertyValue("errorDescr", "A schema validation error has occurred while validating the message tree");
+        project.setPropertyValue("erorCode", "5026");
+        project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
+
+        System.out.println("Running Test Suite: " + testSuite.getName());
+
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("ErrorTestCase");
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap());
+        runner.runTestStepByName("POST_REQUEST");
+
+
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println("TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for (String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+        System.out.print("verifyInvalidInputMessageFormat Test has successfully finished");
+    }
+
+    @Test
+    public void verifyTooManyRequestsFromClientCase() throws Exception {
+        project.setPropertyValue("cardNo", validCardNo);
+        project.setPropertyValue("clientId", validClientId);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("statusError", statusError);
+        project.setPropertyValue("errorDescr", "You have exceeded maximum transaction amount through one day");
+        project.setPropertyValue("erorCode", "778");
+        project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
+
+        System.out.println("Running Test Suite: " + testSuite.getName());
+
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("TooManyRequestsFromClient");
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap());
+
+        runner.run();
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println("TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for (String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+
+        String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
+        System.out.println("THIS IS PROPERTY_VALUE_GUID: " + guid);
+
+        String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        ResultSet result = statement.executeQuery(stmt_get_request_status);
+
+        while (result.next()) {
+            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
+            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(stmt_get_rejected_request);
+        while (result.next()) {
+            assertEquals("778", result.getString("ERROR_CODE"));
+            assertTrue(result.getString("ERROR_DESCR").contains("You have exceeded maximum transaction amount through one day"));
+        }
+        System.out.print("Testing finished successfully");
+    }
+
+    @Test
+    public void verifyTooManyRequestsWithOneCard() throws Exception {
+        project.setPropertyValue("cardNo", "0000000000000000");
+        project.setPropertyValue("clientId", validClientId);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("amount", "20000");
+        project.setPropertyValue("statusError", statusError);
+        project.setPropertyValue("errorDescr", "Exceeded limit of one-card transactions through one day");
+        project.setPropertyValue("erorCode", "779");
+        project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
+
+        System.out.println("Running Test Suite: " + testSuite.getName());
+
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("ErrorTestCase");
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap());
+        runner.runTestStepByName("POST_REQUEST");
+        runner.runTestStepByName("POST_REQUEST");
+        runner.run();
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println("TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for (String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+
+        String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
+        System.out.println("THIS IS PROPERTY_VALUE_GUID: " + guid);
+
+        String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        ResultSet result = statement.executeQuery(stmt_get_request_status);
+
+        while (result.next()) {
+            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
+            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(stmt_get_rejected_request);
+        while (result.next()) {
+            assertEquals("779", result.getString("ERROR_CODE"));
+            assertTrue(result.getString("ERROR_DESCR").contains("Exceeded limit of one-card transactions through one day"));
+        }
+        System.out.print("verifyTooManyRequestsWithOneCard finished successfully");
+    }
 }

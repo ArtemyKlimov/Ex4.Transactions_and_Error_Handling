@@ -1,8 +1,8 @@
-2017-08-28 18:52:39,486 WARN  [SoapUI] Missing folder [C:\LocalRepo\EX4\Tests\ext] for external libraries
-2017-08-28 18:52:40,038 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\aklimov\soapui-settings.xml]
-2017-08-28 18:52:43,610 INFO  [PluginManager] 0 plugins loaded in 22 ms
-2017-08-28 18:52:43,610 INFO  [DefaultSoapUICore] All plugins loaded
-2017-08-28 18:52:49,718 INFO  [WsdlProject] Loaded project from [file:/C:/LocalRepo/EX4/SOAP-UI/CARD-TRANSFER-soapui-project.xml]
-2017-08-28 18:53:10,108 INFO  [log] START
-2017-08-28 18:53:10,492 INFO  [log] DONE
-2017-08-28 18:53:17,540 INFO  [log] CHANGED
+2017-08-29 13:29:48,094 WARN  [SoapUI] Missing folder [C:\LocalRepo\EX4\Tests\ext] for external libraries
+2017-08-29 13:29:48,445 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\aklimov\soapui-settings.xml]
+2017-08-29 13:29:50,635 INFO  [PluginManager] 0 plugins loaded in 2 ms
+2017-08-29 13:29:50,635 INFO  [DefaultSoapUICore] All plugins loaded
+2017-08-29 13:29:51,547 INFO  [WsdlProject] Loaded project from [file:/C:/LocalRepo/EX4/SOAP-UI/CARD-TRANSFER-soapui-project.xml]
+2017-08-29 13:30:02,009 INFO  [log] START
+2017-08-29 13:30:02,839 INFO  [log] DONE
+2017-08-29 13:30:09,909 INFO  [log] CHANGED
