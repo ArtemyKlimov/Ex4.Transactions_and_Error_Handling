@@ -4,6 +4,7 @@ import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCase;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner;
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestRequestStepResult;
+import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStep;
 import com.eviware.soapui.model.support.PropertiesMap;
 import com.eviware.soapui.model.testsuite.*;
 import com.eviware.soapui.support.SoapUIException;
@@ -23,12 +24,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static flex.messaging.util.Trace.message;
 import static org.junit.Assert.*;
 
 public class CardTransferTests {
     private String validClientId = "7";
-    private String invalidClientId = "abc";
+    private String invalidClientId = "333";
     private String wrongClientId = "333";
     private String validAmount = "700";
     private String invalidAmount = "888";
@@ -39,8 +39,12 @@ public class CardTransferTests {
     private String statusSuccess = "Your request is being processed";
     private String alertStatusDone = "DONE";
     private String expectedStatusProcessed = "PROCESSED";
+    private String statusError = "Error";
+    private String expectedStatusRejected = "REJECTED";
+    private String expectedStatusAccepted = "ACCEPTED";
     private SoapUITestCaseRunner runner;
     private WsdlProject project = null;
+    private TestSuite testSuite = null;
     private Connection connection = null;
     Statement statement = null;
 
@@ -64,30 +68,21 @@ public class CardTransferTests {
         }
         statement = connection.createStatement();
         project =  new WsdlProject("C:\\LocalRepo\\EX4\\SOAP-UI\\CARD-TRANSFER-soapui-project.xml");
+        testSuite = project.getTestSuiteByName("Tests");
     }
 
-
-    public String runStepAndGetResponseContent(WsdlTestCaseRunner runner, TestStep testStep) {
-        TestStepResult result = runner.runTestStep(testStep);
-        if (result instanceof WsdlTestRequestStepResult) {
-            return ((WsdlTestRequestStepResult) result).getResponse().getContentAsString();
-        }
-        return null;
-    }
 
 
     @Test
-    public void verifyCorrectData() throws Exception {
+    public void verifyValidData() throws Exception {
         project.setPropertyValue("cardNo", validCardNo);
         project.setPropertyValue("clientId", validClientId);
         project.setPropertyValue("expectedClientId", validClientId);
         project.setPropertyValue("amount", validAmount);
         project.setPropertyValue("expectedAmount", validAmount);
         project.setPropertyValue("phoneNum", validPhoneNum);
-        project.setPropertyValue("expectedStatus", statusSuccess);
+        project.setPropertyValue("expectedStatus", statusError);
         project.setPropertyValue("expectedStatusProcessed", expectedStatusProcessed);
-        List<TestSuite> testSuites = project.getTestSuiteList();
-        TestSuite testSuite = testSuites.get(0);
 
             System.out.println("Running Test Suite: "+ testSuite.getName());
             List<TestCase> testCases = testSuite.getTestCaseList();
@@ -143,6 +138,159 @@ public class CardTransferTests {
 
         System.out.print("Testing finished successfully");
     }
-    
+
+    @Test
+    public void verifyInvalidAmount() throws Exception {
+        project.setPropertyValue("cardNo", validCardNo);
+        project.setPropertyValue("clientId", validClientId);
+        project.setPropertyValue("expectedClientId", validClientId);
+        project.setPropertyValue("amount", invalidAmount);
+        project.setPropertyValue("expectedAmount", invalidAmount);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("expectedStatus", statusSuccess);
+        project.setPropertyValue("expectedStatusProcessed", expectedStatusRejected);
+        List<TestSuite> testSuites = project.getTestSuiteList();
+
+
+        System.out.println("Running Test Suite: "+ testSuite.getName());
+        List<TestCase> testCases = testSuite.getTestCaseList();
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseList().get(0);
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap() );
+         /*
+        WsdlTestStep step1 = testCase.getTestStepByName("POST_REQUEST");
+        WsdlTestStep step2 = testCase.getTestStepByName("getGUID");
+        WsdlTestStep step3 = testCase.getTestStepByName("GET_REQUEST_STATUS");
+        runner.runTestStep(step1);
+        runner.runTestStep(step2);
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException iex) {
+            iex.printStackTrace();
+        }
+        runner.runTestStep(step3);
+        System.out.println(runner.getReason());
+        */
+        runner.run();
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println( "TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult ) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for(String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+
+        String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
+        System.out.println("THIS IS PROPERTY_VALUE_GUID" + guid);
+
+        String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        ResultSet result = statement.executeQuery(stmt_get_request_status);
+
+        while (result.next()) {
+            assertEquals(invalidAmount, result.getString("AMOUNT"));
+            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
+            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(stmt_get_rejected_request);
+        while (result.next()) {
+            assertEquals("789", result.getString("ERROR_CODE"));
+            assertEquals("Amount must be multiple of 100", result.getString("ERROR_DESCR"));
+        }
+
+        System.out.print("Testing finished successfully");
+    }
+
+    @Test
+    public void verifyInvalidClientId() throws Exception {
+        project.setPropertyValue("cardNo", validCardNo);
+        project.setPropertyValue("clientId", invalidClientId);
+        project.setPropertyValue("expectedClientId", "");
+        project.setPropertyValue("amount", validAmount);
+        project.setPropertyValue("expectedAmount", validAmount);
+        project.setPropertyValue("phoneNum", validPhoneNum);
+        project.setPropertyValue("statusError", statusError);
+        project.setPropertyValue("errorDescr", "Processing has rejected Your request");
+        project.setPropertyValue("erorCode", "772");
+        project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
+        List<TestSuite> testSuites = project.getTestSuiteList();
+
+
+        System.out.println("Running Test Suite: "+ testSuite.getName());
+        List<TestCase> testCases = testSuite.getTestCaseList();
+        WsdlTestCase testCase = (WsdlTestCase) testSuite.getTestCaseByName("ErrorTestCase");
+
+        System.out.println("Running Test Case: " + testCase.getName());
+
+        WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap() );
+
+        runner.run();
+        List results = runner.getResults();
+
+        if (results != null && results.size() > 0) {
+            Iterator it = results.iterator();
+            int testStepNo = 1;
+            while (it.hasNext()) {
+                TestStepResult thisResult = (TestStepResult) it.next();
+                System.out.println( "TestStep № " + testStepNo + " : " + thisResult.getStatus());
+                String[] messages = thisResult.getMessages();
+                if (thisResult instanceof WsdlTestRequestStepResult) {
+                    WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult ) thisResult;
+                    System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                }
+                if (messages != null && messages.length > 0) {
+                    for(String message : messages) {
+                        System.out.println("SOAUP UI Message: " + message);
+                        assertTrue(runner.getReason() + message, runner.getStatus().equals(TestStepResult.TestStepStatus.FAILED));
+                    }
+                }
+                testStepNo++;
+            }
+        }
+
+        String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
+        System.out.println("THIS IS PROPERTY_VALUE_GUID" + guid);
+
+        String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        ResultSet result = statement.executeQuery(stmt_get_request_status);
+
+        while (result.next()) {
+            assertEquals(validAmount, result.getString("AMOUNT"));
+            assertEquals(invalidClientId, result.getString("CLIENT_ID"));
+            assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
+            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(stmt_get_rejected_request);
+        while (result.next()) {
+            assertEquals("772", result.getString("ERROR_CODE"));
+            assertEquals("Processing has rejected Your request", result.getString("ERROR_DESCR"));
+        }
+
+        System.out.print("Testing finished successfully");
+    }
+
 
 }

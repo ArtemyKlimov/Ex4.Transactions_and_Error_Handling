@@ -164,7 +164,7 @@
    <soap:Header/>\r
    <soap:Body>\r
       <ib:cardTransactRq>\r
-         <ib:clientId>773</ib:clientId>
+         <ib:clientId>777</ib:clientId>
 	<ib:phoneNum>79101789827</ib:phoneNum>
 	<ib:amount>700</ib:amount>
 	<ib:sender>
@@ -179,7 +179,7 @@
 	</ib:receiver>
       </ib:cardTransactRq>\r
    </soap:Body>\r
-</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/CARD_TRANSFER/CARD_TRANSFER/POST_REQUESTRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="84c2f13f-36e7-441f-b188-ee0753fe6690" name="Tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="1f71d8a8-8c93-492f-b1cb-5f7e0743c0b9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase1" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.2" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" name="StepOne" id="43c0962e-b213-4ce4-a9dc-40b8ae8c94e7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>POST_REQUEST</con:operation><con:request name="StepOne" id="a45b431d-d12f-42e5-9c54-08e2637a4024"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/CARD_TRANSFER/CARD_TRANSFER/POST_REQUESTRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="84c2f13f-36e7-441f-b188-ee0753fe6690" name="Tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="1f71d8a8-8c93-492f-b1cb-5f7e0743c0b9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase1" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.2" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="request" name="POST_REQUEST" id="43c0962e-b213-4ce4-a9dc-40b8ae8c94e7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>POST_REQUEST</con:operation><con:request name="POST_REQUEST" id="a45b431d-d12f-42e5-9c54-08e2637a4024"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
    <soap:Header/>\r
    <soap:Body>\r
       <ib:cardTransactRq>\r
@@ -252,6 +252,8 @@ log.info "DONE"
 
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
+
+sleep(7000)
 log.info "CHANGED"
 /*
 def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
@@ -261,11 +263,102 @@ def holder = groovyUtils.getXmlHolder( "Request 1#Response" )
 for( item in holder.getNodeValues( "//guid" ))
     log.info "Item : [$item]" 
 
-   */ </script></con:config></con:testStep><con:testStep type="request" name="StepTwo" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="StepTwo" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
+   */ </script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
    <soap:Header/>\r
    <soap:Body>\r
       <ib:getStatusRq>\r
          <ib:guid>${#TestSuite#GUID}</ib:guid>\r
       </ib:getStatusRq>\r
    </soap:Body>\r
-</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="6c05fd2e-7e61-431f-9dd4-d18b96a4b00b"/><con:assertion type="Simple Contains" id="6644fd1c-30e0-4617-8d36-5a6c5dffc783" name="Contains"><con:configuration><token>${#Project#expectedStatusProcessed}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>GUID</con:name><con:value>890</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>2222222222222222</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>GUID</con:name><con:value>e666f367-7dff-4c8a-9548-ae993cd856e0</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>0000000000000001</con:value></con:property></con:properties></con:testSuite><con:properties><con:property><con:name>ClientId</con:name><con:value>131</con:value></con:property><con:property><con:name>phoneNum</con:name><con:value>79101789824</con:value></con:property><con:property><con:name>amount</con:name><con:value>1000</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>2222333344445566</con:value></con:property><con:property><con:name>validThru</con:name><con:value>07.21</con:value></con:property><con:property><con:name>expectedClientId</con:name><con:value>131</con:value></con:property><con:property><con:name>expectedAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>statusSuccess</con:name><con:value>Your request is being processed</con:value></con:property><con:property><con:name>GUID</con:name><con:value>777</con:value></con:property><con:property><con:name>ExpAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>RealAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>expectedStatusProcessed</con:name><con:value>PROCESSED</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="6c05fd2e-7e61-431f-9dd4-d18b96a4b00b"/><con:assertion type="Simple Contains" id="6644fd1c-30e0-4617-8d36-5a6c5dffc783" name="GET_REQUEST_STATUS_STATUS"><con:configuration><token>${#Project#expectedStatusProcessed}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>GUID</con:name><con:value>890</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>2222222222222222</con:value></con:property></con:properties></con:testCase><con:testCase id="d9ac31a3-96bf-4428-b472-9c3017e8ee0d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ErrorTestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="POST_REQUEST" id="da1916ac-e7a2-4a8d-8e5d-19ebd21aff61"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>POST_REQUEST</con:operation><con:request name="POST_REQUEST" id="31c13743-fa06-49df-8f78-c8b6074160e8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
+   <soap:Header/>
+   <soap:Body>
+      <ib:cardTransactRq>
+         <ib:clientId>${#Project#ClientId}</ib:clientId>
+         <ib:phoneNum>${#Project#phoneNum}</ib:phoneNum>
+         <ib:amount>${#Project#amount}</ib:amount>
+         <ib:sender>
+            <ib:cardNo>${#Project#cardNo}</ib:cardNo>
+            <ib:cardOwner>Ivan Petrov</ib:cardOwner>
+            <ib:validThru>${#Project#validThru}</ib:validThru>
+         </ib:sender>
+         <ib:receiver>
+            <ib:cardNo>1111222233334444</ib:cardNo>
+            <ib:cardOwner>Vasiliy Sidorov</ib:cardOwner>
+            <ib:validThru>12.22</ib:validThru>
+         </ib:receiver>
+      </ib:cardTransactRq>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9d236ef4-133b-4a84-b873-3df94ddf7273"/><con:assertion type="Simple Contains" id="6109e838-9a56-4bb9-8c97-ba39aacb7af9" name="statusError"><con:configuration><token>${#Project#statusError}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="9c5be085-e052-488c-880a-552d48b301d2" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="5a16a22a-02f9-4bd1-be7e-447871e5a32a" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="b2819d8c-8a05-4477-9722-748aef547a91"><con:settings/><con:config><script>//def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["Tests"].testCases["TestCase1"] ; 
+//def tstep = tcase.getTestStepByName("Test_Step_X");
+/*
+def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
+String propertySpec = '${' + previousTestStep.name + '#Response}'
+log.info "propertySpec : ${propertySpec}"
+def response = context.expand(propertySpec)
+
+log.info("context.expand(propertySpec) : ${response}")
+
+def document = new XmlSlurper().parseText(response)
+def allNodes = document.depthFirst().collect{ it }
+
+allNodes.each { node -> 
+ log.info "node named '${node.name()}' has content :"
+ log.info node.text()
+}
+
+
+
+//def response = context.expand(propertySpec)
+def holder = new com.eviware.soapui.support.XmlHolder( propertySpec )
+def guid = holder["//*[local-name()='guid']"]
+
+*/
+log.info "START"
+
+def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
+String propertySpec = '${' + previousTestStep.name + '#Response}'
+//log.info "propertySpec : ${propertySpec}"
+def response = context.expand(propertySpec)
+
+//log.info("context.expand(propertySpec) : ${response}")
+
+def document = new XmlSlurper().parseText(response)
+
+def guid = document.'**'.find { node->
+    node.name() == 'guid' 
+}
+
+//def allNodes = document.depthFirst().collect{ it }
+
+//allNodes.each { node -> 
+// log.info "node named '${node.name()}' has content :"
+ //log.info node.text()
+
+//}
+
+log.info "DONE"
+
+testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
+
+
+sleep(7000)
+log.info "CHANGED"
+/*
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
+def holder = groovyUtils.getXmlHolder( "Request 1#Response" )
+
+// loop item nodes in response message
+for( item in holder.getNodeValues( "//guid" ))
+    log.info "Item : [$item]" 
+
+   */ </script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="de6cacfc-f27c-4288-865d-e1c6bbb9f3e8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="0cdfe813-00fb-4219-96e0-f78af6efef4c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
+   <soap:Header/>
+   <soap:Body>
+      <ib:getStatusRq>
+         <ib:guid>${#TestSuite#GUID}</ib:guid>
+      </ib:getStatusRq>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="658ff21c-b1af-4626-a04a-1762670bbf0e"/><con:assertion type="Simple Contains" id="a3ab3165-0bd2-4c11-bd4a-56af82284186" name="expectedStatusRejected"><con:configuration><token>${#Project#expectedStatusRejected}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="c2fdbc03-78ac-40b3-97a7-d4742c466521" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="743acb60-8ec3-4250-b07c-43ed9f89b967" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>GUID</con:name><con:value>e666f367-7dff-4c8a-9548-ae993cd856e0</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>0000000000000001</con:value></con:property></con:properties></con:testSuite><con:properties><con:property><con:name>ClientId</con:name><con:value>3</con:value></con:property><con:property><con:name>phoneNum</con:name><con:value>79101789824</con:value></con:property><con:property><con:name>amount</con:name><con:value>1000</con:value></con:property><con:property><con:name>cardNo</con:name><con:value>2222333344445566</con:value></con:property><con:property><con:name>validThru</con:name><con:value>07.21</con:value></con:property><con:property><con:name>expectedClientId</con:name><con:value>131</con:value></con:property><con:property><con:name>expectedAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>statusSuccess</con:name><con:value>Your request is being processed</con:value></con:property><con:property><con:name>GUID</con:name><con:value>777</con:value></con:property><con:property><con:name>ExpAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>RealAmount</con:name><con:value>1000</con:value></con:property><con:property><con:name>expectedStatusProcessed</con:name><con:value>PROCESSED</con:value></con:property><con:property><con:name>statusError</con:name><con:value>Err</con:value></con:property><con:property><con:name>errorDescr</con:name><con:value>errorDescr</con:value></con:property><con:property><con:name>errorCode</con:name><con:value>1</con:value></con:property><con:property><con:name>expectedStatusRejected</con:name><con:value>rejected</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
