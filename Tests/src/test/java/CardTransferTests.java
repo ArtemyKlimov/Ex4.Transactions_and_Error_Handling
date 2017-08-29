@@ -13,16 +13,16 @@ import com.eviware.soapui.tools.SoapUITestCaseRunner;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
 import org.junit.Assert;
+
+import java.util.*;
 import java.util.logging.*;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -406,8 +406,22 @@ public class CardTransferTests {
 
     @Test
     public void verifyTooManyRequestsFromClientCase() throws Exception {
-        project.setPropertyValue("cardNo", validCardNo);
-        project.setPropertyValue("clientId", validClientId);
+
+        Random r = new Random();
+        long cardOne = 1000000000000000L + r.nextInt(100000);
+        long cardTwo = 1000000000000000L + r.nextInt(100000);
+        long cardThree = 1000000000000000L + r.nextInt(100000);
+        int clientId = 3;
+        while(true) {
+            clientId = r.nextInt(100000);
+            if(clientId % 3 != 0)
+                break;
+        }
+        System.out.println("CLIENT_ID is: " + clientId);
+        project.setPropertyValue("cardOne", String.valueOf(cardOne));
+        project.setPropertyValue("cardTwo", String.valueOf(cardTwo));
+        project.setPropertyValue("cardThree", String.valueOf(cardThree));
+        project.setPropertyValue("clientId", String.valueOf(clientId));
         project.setPropertyValue("phoneNum", validPhoneNum);
         project.setPropertyValue("statusError", statusError);
         project.setPropertyValue("errorDescr", "You have exceeded maximum transaction amount through one day");
@@ -454,7 +468,7 @@ public class CardTransferTests {
         ResultSet result = statement.executeQuery(stmt_get_request_status);
 
         while (result.next()) {
-            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(String.valueOf(clientId), result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
             assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
             //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
@@ -470,8 +484,16 @@ public class CardTransferTests {
 
     @Test
     public void verifyTooManyRequestsWithOneCard() throws Exception {
-        project.setPropertyValue("cardNo", "0000000000000000");
-        project.setPropertyValue("clientId", validClientId);
+        Random r = new Random();
+        long cardNo = 1000000000000000L + r.nextInt(10000);
+        int clientId = 3;
+        while(true) {
+            clientId = r.nextInt(100000);
+            if(clientId % 3 != 0)
+                break;
+        }
+        project.setPropertyValue("cardNo", String.valueOf(cardNo));
+        project.setPropertyValue("clientId", String.valueOf(clientId));
         project.setPropertyValue("phoneNum", validPhoneNum);
         project.setPropertyValue("amount", "20000");
         project.setPropertyValue("statusError", statusError);
@@ -520,8 +542,9 @@ public class CardTransferTests {
         ResultSet result = statement.executeQuery(stmt_get_request_status);
 
         while (result.next()) {
-            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(String.valueOf(clientId), result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
+            assertEquals(String.valueOf(cardNo), result.getString("CARD_NO"));
             assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
             //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
         }

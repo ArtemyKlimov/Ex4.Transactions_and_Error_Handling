@@ -1,0 +1,122 @@
+
+
+CREATE COMPUTE MODULE AFTER_REPLY_ERROR_HANDLER_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		DECLARE current_ref REFERENCE TO InputRoot.XMLNSC.*;
+		DECLARE exception_ref REFERENCE TO InputExceptionList.*[1];
+		DECLARE code CHARACTER;
+		DECLARE code_int INTEGER;
+		DECLARE descr CHARACTER;
+		DECLARE processingStage CHARACTER InputRoot.MQRFH2.usr.processingStage;
+		
+		CALL getExceptionInfo(exception_ref, code, descr);
+		
+		DECLARE operationType CHARACTER InputRoot.MQRFH2.usr.operation;
+		IF operationType = 'GET_REQUEST_STATUS' THEN
+			CALL CopyEntireMessage();
+			DECLARE outBody REFERENCE TO OutputRoot.XMLNSC.*;
+			SET outBody.ns:status = 'Error';
+			SET outBody.ns:code = code;
+			SET outBody.ns:desc = descr;
+		ELSE
+			DECLARE GUID CHARACTER InputRoot.XMLNSC.*.*:guid;
+			IF GUID IS NULL THEN 
+				SET GUID = InputRoot.MQRFH2.usr.guid;
+			END IF; 
+			SET OutputRoot.MQMD.Format = 'MQRFH2';
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)operation = operationType;
+			
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)guid = GUID;
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)outputQueue = 'TRANSFER.ERRORS.' || operationType || '.' || processingStage;
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)operationType = operationType;
+			SET OutputRoot.MQRFH2.usr.(MQRFH2.Field)processingStage = processingStage;
+			DECLARE usrRef REFERENCE TO OutputRoot.MQRFH2.usr;
+			SET usrRef.(MQRFH2.Field)time = CURRENT_TIMESTAMP;
+			SET usrRef.(MQRFH2.Field)code = code;
+			SET usrRef.(MQRFH2.Field)error = descr;
+		--	SET OutputLocalEnvironment.Variables.BitStream.Info = 'exceptionList'; 
+		--	CREATE LASTCHILD OF OutputLocalEnvironment.Variables.BitStream DOMAIN('XMLNSC') NAME 'XMLNSC';
+		--	SET OutputLocalEnvironment.Variables.BitStream.XMLNSC.ExceptionList = InputExceptionList;
+			SET usrRef.(MQRFH2.Field)trace  = InputExceptionList;
+			SET OutputRoot.XMLNSC.ns:cardTransactRs.ns:guid = GUID;
+			DECLARE outBody REFERENCE TO OutputRoot.XMLNSC.ns:cardTransactRs;
+			
+			UPDATE Database.REQUEST_STATUS  AS BS SET REQUEST_STATUS = 'REJECTED' WHERE BS.GUID = GUID;
+			INSERT INTO Database.REQUEST_REJECTED(GUID, ERROR_CODE, ERROR_DESCR, DATETIME) 
+										   VALUES(GUID, code, descr, CURRENT_TIMESTAMP);
+			SET outBody.ns:status = 'Error';
+			SET outBody.ns:code = code;
+			SET outBody.ns:desc = descr;
+			
+			DECLARE queue CHARACTER 'TRANSFER.ERRORS.' || operationType || '.' || processingStage;
+
+			SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = queue;							   
+		END IF;
+		
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE getExceptionInfo(IN ref REFERENCE, INOUT code CHARACTER, INOUT descr CHARACTER)
+	BEGIN
+				
+		WHILE (FIELDNAME(ref) <> 'Insert')AND(LASTMOVE(ref)) DO
+			MOVE ref LASTCHILD;
+		END WHILE;
+	
+		MOVE ref PREVIOUSSIBLING;		
+		DECLARE refVal CHAR FIELDVALUE(ref);
+		
+		IF LENGTH(TRANSLATE(refVal, '01234567890')) = 0 THEN
+			-- msg from backut to failure
+			SET code = refVal;
+			MOVE ref NEXTSIBLING;						
+			SET descr = FIELDVALUE(ref);				
+		ELSE 			
+			DECLARE tmpRef REFERENCE TO ref;
+			MOVE tmpRef PARENT;			
+			IF (FIELDVALUE(tmpRef.Text) = 'User generated exception') THEN
+				-- thrown from source
+				--SET code = FIELDVALUE(ref.Text);
+				SET code = FIELDVALUE(tmpRef.Number);
+				MOVE ref NEXTSIBLING;
+				SET descr = FIELDVALUE(ref.Text);							
+			ELSE
+				IF refVal = 'User exception thrown by throw node' THEN
+					MOVE ref PREVIOUSSIBLING;
+					SET code = FIELDVALUE(ref);
+					MOVE ref NEXTSIBLING;
+					
+					MOVE ref NEXTSIBLING;		
+					SET descr = FIELDVALUE(ref.Text);				
+				ELSE
+					MOVE ref NEXTSIBLING;
+					SET descr = '';
+					WHILE (FIELDNAME(ref) = 'Insert')AND(LASTMOVE(ref)) DO
+						SET descr = descr || FIELDVALUE(ref.Text) || ' | ';
+						MOVE ref PREVIOUSSIBLING;
+					END WHILE;
+					MOVE ref PARENT;
+					SET descr = FIELDVALUE(ref.Text) || ' | ' || descr;
+					SET code = FIELDVALUE(ref.Number);
+				END IF;		
+			END IF;	
+		END IF;	
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

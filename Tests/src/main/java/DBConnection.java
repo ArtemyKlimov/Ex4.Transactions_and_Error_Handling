@@ -3,6 +3,11 @@ import java.sql.*;
 
 public class DBConnection {
     public static void main(String[] args) throws SQLException {
+       //connectDb();
+    }
+
+    public void connectDb() throws SQLException{
+
         try {
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -53,6 +58,7 @@ public class DBConnection {
         statement.executeUpdate(
                 "INSERT INTO REQUEST_STATUS(GUID, CLIENT_ID, DATETIME, REQUEST_STATUS, ALERT_STATUS, CARD_NO, REQUEST_DATE, PHONE_NUM, AMOUNT) " +
                         "values('fd8624af-d8e6-4f9c-80fc-dd57917db727', '777', '23.08.17 11:54:05,121707000', 'PROCESSED', 'DELIVERED', '123', '23.08.17', '320502', '700')");
+
     }
 
 }

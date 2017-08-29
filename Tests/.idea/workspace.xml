@@ -16,8 +16,8 @@
       <file leaf-file-name="DBConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DBConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="15" selection-end-line="46" selection-end-column="29" />
+            <state relative-caret-position="85">
+              <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -26,8 +26,8 @@
       <file leaf-file-name="CardTransferTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/CardTransferTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="471" column="68" lean-forward="false" selection-start-line="471" selection-start-column="68" selection-end-line="471" selection-end-column="68" />
+            <state relative-caret-position="453">
+              <caret line="406" column="9" lean-forward="false" selection-start-line="406" selection-start-column="9" selection-end-line="406" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
@@ -83,8 +83,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="367" />
-    <option name="y" value="59" />
+    <option name="x" value="257" />
+    <option name="y" value="40" />
     <option name="width" value="1718" />
     <option name="height" value="1005" />
   </component>
@@ -157,7 +157,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CardTransferTests.verifyTooManyRequestsWithOneCard">
+  <component name="RunManager" selected="JUnit.CardTransferTests.verifyTooManyRequestsFromClientCase">
     <configuration name="CardTransferTests.verifyInvalidClientIdCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="JavaDB" />
@@ -348,8 +348,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyTooManyRequestsWithOneCard" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyTooManyRequestsFromClientCase" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyTooManyRequestsFromClientCase" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyTooManyRequestsWithOneCard" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyInvalidClientIdCase" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyInvalidInputMessageFormat" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.CardTransferTests.verifyTooLargeAmountCase" />
@@ -370,24 +370,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CardTransferTests_verifyInvalidClientIdCase - 2017.08.29 at 12h 52m 18s.xml">
-      <configuration name="CardTransferTests.verifyInvalidClientIdCase" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CardTransferTests_verifyInvalidClientIdCase - 2017.08.29 at 12h 54m 14s.xml">
-      <configuration name="CardTransferTests.verifyInvalidClientIdCase" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CardTransferTests_verifyInvalidClientIdCase - 2017.08.29 at 12h 55m 05s.xml">
-      <configuration name="CardTransferTests.verifyInvalidClientIdCase" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CardTransferTests_verifyInvalidInputMessageFormat - 2017.08.29 at 12h 36m 08s.xml">
-      <configuration name="CardTransferTests.verifyInvalidInputMessageFormat" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CardTransferTests_verifyInvalidInputMessageFormat - 2017.08.29 at 12h 42m 24s.xml">
-      <configuration name="CardTransferTests.verifyInvalidInputMessageFormat" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CardTransferTests_verifyInvalidInputMessageFormat - 2017.08.29 at 12h 50m 05s.xml">
-      <configuration name="CardTransferTests.verifyInvalidInputMessageFormat" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 13h 12m 27s.xml">
       <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
     </history-entry>
@@ -397,7 +379,25 @@
     <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 13h 19m 48s.xml">
       <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 15h 08m 51s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 15h 15m 40s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 15h 33m 31s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsFromClientCase - 2017.08.29 at 15h 40m 00s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsFromClientCase" configurationId="JUnit" />
+    </history-entry>
     <history-entry file="CardTransferTests_verifyTooManyRequestsWithOneCard - 2017.08.29 at 13h 30m 10s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsWithOneCard" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsWithOneCard - 2017.08.29 at 14h 04m 44s.xml">
+      <configuration name="CardTransferTests.verifyTooManyRequestsWithOneCard" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CardTransferTests_verifyTooManyRequestsWithOneCard - 2017.08.29 at 14h 19m 35s.xml">
       <configuration name="CardTransferTests.verifyTooManyRequestsWithOneCard" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -411,7 +411,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="367" y="59" width="1718" height="1005" extended-state="0" />
+    <frame x="257" y="40" width="1718" height="1005" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -422,7 +422,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951117" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3689655" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18965517" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25903615" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -524,14 +524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DBConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="15" selection-end-line="46" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -540,10 +532,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DBConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/CardTransferTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="471" column="68" lean-forward="false" selection-start-line="471" selection-start-column="68" selection-end-line="471" selection-end-column="68" />
+        <state relative-caret-position="453">
+          <caret line="406" column="9" lean-forward="false" selection-start-line="406" selection-start-column="9" selection-end-line="406" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
