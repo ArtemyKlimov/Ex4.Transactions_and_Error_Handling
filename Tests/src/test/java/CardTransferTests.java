@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 public class CardTransferTests {
     private String validClientId = "17";
     private String invalidClientId = "333";
-    private String wrongClientId = "333";
+    private String wrongClientId = "abc";
     private String validAmount = "700";
     private String invalidAmount = "888";
     private String wrongCardNoFormat = "12345";
