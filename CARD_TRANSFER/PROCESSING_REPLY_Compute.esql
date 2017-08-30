@@ -17,14 +17,15 @@ CREATE COMPUTE MODULE PROCESSING_REPLY_Compute
 			DECLARE CODE INTEGER inBody.ib:CODE;
 			DECLARE DESCR CHARACTER inBody.ib:DESCR;
 			INSERT INTO Database.SMSLIST(GUID, TEXT, PHONE, STATUS) 
-	    				 	  VALUES(GUID, 'Your request was declined by Processing Service. Reason: ' || DESCR, PHONE_NUM, 'PENDING');		
+	    				 	  VALUES(GUID, 'Your request was declined by Processing Service. Reason: ' || DESCR, PHONE_NUM, 'PENDING');
+	    	RETURN TRUE;		
 		ELSE
 			UPDATE Database.REQUEST_STATUS  AS BS SET REQUEST_STATUS = 'PROCESSED' WHERE BS.GUID = GUID;
 		
 			INSERT INTO Database.SMSLIST(GUID, TEXT, PHONE, STATUS) 
 	    				 	  VALUES(GUID, 'Your request was successfully completed', PHONE_NUM, 'PENDING');	
 		END IF;
-		RETURN TRUE;
+		RETURN FALSE;
 	END;
 
 	CREATE PROCEDURE CopyMessageHeaders() BEGIN

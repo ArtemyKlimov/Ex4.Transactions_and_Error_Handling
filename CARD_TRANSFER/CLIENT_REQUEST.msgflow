@@ -18,9 +18,6 @@
       <nodes xmi:type="ComIbmSOAPInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="58,231" wsdlFileName="CARD_TRANSFER.wsdl" selectedPortType="CARD_TRANSFER" selectedBinding="CARD_TRANSFERSOAP12" selectedPort="CARD_TRANSFERSOAP12" targetNamespace="http://www.example.org/CARD_TRANSFER/" useHTTPTransport="true" urlSelector="/CARD_TRANSFER" allowQueryWSDL="true" parserXmlnscBuildTreeUsingXMLSchema="false" validateMaster="none">
         <translation xmi:type="utility:ConstantString" string="SOAP Input"/>
       </nodes>
-      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="751,61" destination="file" filePath="C:\test\ex4\succeded.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
-        <translation xmi:type="utility:ConstantString" string="Trace"/>
-      </nodes>
       <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="1224,404" destination="file" filePath="C:\test\ex4\failure.txt" pattern="Trace at ${CURRENT_TIMESTAMP}&#xD;&#xA;Root = ${Root}&#xD;&#xA;LocalEnvironment = ${LocalEnvironment}&#xD;&#xA;ExceptionList = ${ExceptionList}">
         <translation xmi:type="utility:ConstantString" string="Trace2"/>
       </nodes>

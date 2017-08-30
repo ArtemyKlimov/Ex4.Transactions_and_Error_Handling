@@ -4,7 +4,6 @@ CREATE COMPUTE MODULE PROCESSING_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		CALL CopyMessageHeaders();
-		--CALL CopyEntireMessage();
 		DECLARE inBody REFERENCE TO InputRoot.XMLNSC.ib:cardTransactRs;
 		DECLARE CLIENT_ID INTEGER inBody.ib:clientId;
 		DECLARE GUID CHARACTER inBody.ib:guid;
@@ -34,7 +33,7 @@ CREATE COMPUTE MODULE PROCESSING_Compute
         	SET start = CURRENT_TIME + delay;
 			SET OutputLocalEnvironment.TimeoutRequest.Action = 'SET'; 
 			SET OutputLocalEnvironment.TimeoutRequest.Identifier = 	GUID;
-			SET OutputLocalEnvironment.TimeoutRequest.Count=1;
+			SET OutputLocalEnvironment.TimeoutRequest.Count = 1;
 			SET OutputLocalEnvironment.TimeoutRequest.StartDate = 'TODAY';
 			SET OutputLocalEnvironment.TimeoutRequest.StartTime = start;
 			PROPAGATE TO TERMINAL 'out2';

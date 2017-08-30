@@ -198,41 +198,13 @@
          </ib:receiver>\r
       </ib:cardTransactRq>\r
    </soap:Body>\r
-</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1169381d-5972-4beb-a6f1-9dbb36595d9d"/><con:assertion type="Simple Contains" id="9422e394-00aa-4c61-af44-c3fa538b6be7" name="ClientId"><con:configuration><token>${#Project#expectedClientId}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="8ae04c5f-97ed-448c-99ff-f21456e9eeb0" name="amount"><con:configuration><token>${#Project#expectedAmount}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="83024a66-f120-4364-aa09-b25e02426ecd" name="status"><con:configuration><token>${#Project#statusSuccess}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="83db5d08-a0d5-4d93-a861-6130c80e2b3f"><con:settings/><con:config><script>//def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
-//def project = testRunner.testCase.testSuite.project ;
-//def tcase = project.testSuites["Tests"].testCases["TestCase1"] ; 
-//def tstep = tcase.getTestStepByName("Test_Step_X");
-/*
-def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
-String propertySpec = '${' + previousTestStep.name + '#Response}'
-log.info "propertySpec : ${propertySpec}"
-def response = context.expand(propertySpec)
-
-log.info("context.expand(propertySpec) : ${response}")
-
-def document = new XmlSlurper().parseText(response)
-def allNodes = document.depthFirst().collect{ it }
-
-allNodes.each { node -> 
- log.info "node named '${node.name()}' has content :"
- log.info node.text()
-}
-
-
-
-//def response = context.expand(propertySpec)
-def holder = new com.eviware.soapui.support.XmlHolder( propertySpec )
-def guid = holder["//*[local-name()='guid']"]
-
-*/
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1169381d-5972-4beb-a6f1-9dbb36595d9d"/><con:assertion type="Simple Contains" id="9422e394-00aa-4c61-af44-c3fa538b6be7" name="ClientId"><con:configuration><token>${#Project#expectedClientId}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="8ae04c5f-97ed-448c-99ff-f21456e9eeb0" name="amount"><con:configuration><token>${#Project#expectedAmount}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="83024a66-f120-4364-aa09-b25e02426ecd" name="status"><con:configuration><token>${#Project#statusSuccess}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="83db5d08-a0d5-4d93-a861-6130c80e2b3f"><con:settings/><con:config><script>
 log.info "START"
 
 def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
 String propertySpec = '${' + previousTestStep.name + '#Response}'
-//log.info "propertySpec : ${propertySpec}"
-def response = context.expand(propertySpec)
 
-//log.info("context.expand(propertySpec) : ${response}")
+def response = context.expand(propertySpec)
 
 def document = new XmlSlurper().parseText(response)
 
@@ -240,30 +212,11 @@ def guid = document.'**'.find { node->
     node.name() == 'guid' 
 }
 
-//def allNodes = document.depthFirst().collect{ it }
-
-//allNodes.each { node -> 
-// log.info "node named '${node.name()}' has content :"
- //log.info node.text()
-
-//}
-
-log.info "DONE"
-
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
 
 sleep(7000)
-log.info "CHANGED"
-/*
-def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
-def holder = groovyUtils.getXmlHolder( "Request 1#Response" )
-
-// loop item nodes in response message
-for( item in holder.getNodeValues( "//guid" ))
-    log.info "Item : [$item]" 
-
-   */ </script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
+log.info "guid is " + guid.text()</script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
    <soap:Header/>\r
    <soap:Body>\r
       <ib:getStatusRq>\r
@@ -289,41 +242,12 @@ for( item in holder.getNodeValues( "//guid" ))
          </ib:receiver>
       </ib:cardTransactRq>
    </soap:Body>
-</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9d236ef4-133b-4a84-b873-3df94ddf7273"/><con:assertion type="Simple Contains" id="6109e838-9a56-4bb9-8c97-ba39aacb7af9" name="statusError"><con:configuration><token>${#Project#statusError}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="9c5be085-e052-488c-880a-552d48b301d2" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="5a16a22a-02f9-4bd1-be7e-447871e5a32a" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="b2819d8c-8a05-4477-9722-748aef547a91"><con:settings/><con:config><script>//def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
-//def project = testRunner.testCase.testSuite.project ;
-//def tcase = project.testSuites["Tests"].testCases["TestCase1"] ; 
-//def tstep = tcase.getTestStepByName("Test_Step_X");
-/*
-def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
-String propertySpec = '${' + previousTestStep.name + '#Response}'
-log.info "propertySpec : ${propertySpec}"
-def response = context.expand(propertySpec)
-
-log.info("context.expand(propertySpec) : ${response}")
-
-def document = new XmlSlurper().parseText(response)
-def allNodes = document.depthFirst().collect{ it }
-
-allNodes.each { node -> 
- log.info "node named '${node.name()}' has content :"
- log.info node.text()
-}
-
-
-
-//def response = context.expand(propertySpec)
-def holder = new com.eviware.soapui.support.XmlHolder( propertySpec )
-def guid = holder["//*[local-name()='guid']"]
-
-*/
-log.info "START"
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9d236ef4-133b-4a84-b873-3df94ddf7273"/><con:assertion type="Simple Contains" id="6109e838-9a56-4bb9-8c97-ba39aacb7af9" name="statusError"><con:configuration><token>${#Project#statusError}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="9c5be085-e052-488c-880a-552d48b301d2" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="5a16a22a-02f9-4bd1-be7e-447871e5a32a" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="b2819d8c-8a05-4477-9722-748aef547a91"><con:settings/><con:config><script>log.info "ErrorTestCase START. GUID is: "
 
 def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
 String propertySpec = '${' + previousTestStep.name + '#Response}'
-//log.info "propertySpec : ${propertySpec}"
-def response = context.expand(propertySpec)
 
-//log.info("context.expand(propertySpec) : ${response}")
+def response = context.expand(propertySpec)
 
 def document = new XmlSlurper().parseText(response)
 
@@ -331,30 +255,16 @@ def guid = document.'**'.find { node->
     node.name() == 'guid' 
 }
 
-//def allNodes = document.depthFirst().collect{ it }
 
-//allNodes.each { node -> 
-// log.info "node named '${node.name()}' has content :"
- //log.info node.text()
 
-//}
-
-log.info "DONE"
+log.info guid.text()
 
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
 
 sleep(7000)
-log.info "CHANGED"
-/*
-def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
-def holder = groovyUtils.getXmlHolder( "Request 1#Response" )
-
-// loop item nodes in response message
-for( item in holder.getNodeValues( "//guid" ))
-    log.info "Item : [$item]" 
-
-   */ </script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="de6cacfc-f27c-4288-865d-e1c6bbb9f3e8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="0cdfe813-00fb-4219-96e0-f78af6efef4c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
+log.info "ErrorTestCase FINISHED"
+</script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="de6cacfc-f27c-4288-865d-e1c6bbb9f3e8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="0cdfe813-00fb-4219-96e0-f78af6efef4c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
    <soap:Header/>
    <soap:Body>
       <ib:getStatusRq>
@@ -475,41 +385,11 @@ for( item in holder.getNodeValues( "//guid" ))
          </ib:receiver>
       </ib:cardTransactRq>
    </soap:Body>
-</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="8a86a498-4d4d-4d1e-bbb5-63a84890542c"/><con:assertion type="Simple Contains" id="322a6761-e75c-455c-bf0f-0aabeb05a573" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="270eeebb-d48c-4758-af56-46f042ddc4ee" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="bb696597-6cce-43ed-9708-cd389f029939"><con:settings/><con:config><script>//def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
-//def project = testRunner.testCase.testSuite.project ;
-//def tcase = project.testSuites["Tests"].testCases["TestCase1"] ; 
-//def tstep = tcase.getTestStepByName("Test_Step_X");
-/*
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="8a86a498-4d4d-4d1e-bbb5-63a84890542c"/><con:assertion type="Simple Contains" id="322a6761-e75c-455c-bf0f-0aabeb05a573" name="errorCode"><con:configuration><token>${#Project#errorCode}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="270eeebb-d48c-4758-af56-46f042ddc4ee" name="errorDescr"><con:configuration><token>${#Project#errorDescr}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="bb696597-6cce-43ed-9708-cd389f029939"><con:settings/><con:config><script>
 def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
 String propertySpec = '${' + previousTestStep.name + '#Response}'
-log.info "propertySpec : ${propertySpec}"
 def response = context.expand(propertySpec)
 
-log.info("context.expand(propertySpec) : ${response}")
-
-def document = new XmlSlurper().parseText(response)
-def allNodes = document.depthFirst().collect{ it }
-
-allNodes.each { node -> 
- log.info "node named '${node.name()}' has content :"
- log.info node.text()
-}
-
-
-
-//def response = context.expand(propertySpec)
-def holder = new com.eviware.soapui.support.XmlHolder( propertySpec )
-def guid = holder["//*[local-name()='guid']"]
-
-*/
-log.info "START"
-
-def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
-String propertySpec = '${' + previousTestStep.name + '#Response}'
-//log.info "propertySpec : ${propertySpec}"
-def response = context.expand(propertySpec)
-
-//log.info("context.expand(propertySpec) : ${response}")
 
 def document = new XmlSlurper().parseText(response)
 
@@ -517,28 +397,14 @@ def guid = document.'**'.find { node->
     node.name() == 'guid' 
 }
 
-//def allNodes = document.depthFirst().collect{ it }
 
-//allNodes.each { node -> 
-// log.info "node named '${node.name()}' has content :"
- //log.info node.text()
-
-//}
 
 log.info "DONE"
 
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
 log.info "CHANGED"
-/*
-def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
-def holder = groovyUtils.getXmlHolder( "Request 1#Response" )
-
-// loop item nodes in response message
-for( item in holder.getNodeValues( "//guid" ))
-    log.info "Item : [$item]" 
-
-   */ </script></con:config></con:testStep><con:testStep type="delay" name="Delay" id="067040fb-c606-4b50-a4d1-c9f9df34c9d6"><con:settings/><con:config><delay>8000</delay></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="7f468ea0-7642-4000-835e-7511ee54da41"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="69eac4ae-31b8-4d7e-89b3-aedf5fed22ac"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
+</script></con:config></con:testStep><con:testStep type="delay" name="Delay" id="067040fb-c606-4b50-a4d1-c9f9df34c9d6"><con:settings/><con:config><delay>8000</delay></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="7f468ea0-7642-4000-835e-7511ee54da41"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="69eac4ae-31b8-4d7e-89b3-aedf5fed22ac"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
    <soap:Header/>
    <soap:Body>
       <ib:getStatusRq>

@@ -98,6 +98,7 @@ public class CardTransferTests {
 
                 if (results != null && results.size() > 0) {
                     Iterator it = results.iterator();
+                    int testCaseNo = 1;
                     while (it.hasNext()) {
                         TestStepResult thisResult = (TestStepResult) it.next();
 
@@ -109,11 +110,12 @@ public class CardTransferTests {
                             }
                         }
 
-                        System.out.println( "Result № " + thisResult.getStatus());
+                        System.out.println( "TestStep № " + testCaseNo + thisResult.getStatus());
                         if (thisResult instanceof WsdlTestRequestStepResult) {
                             WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult ) thisResult;
                             System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
                         }
+                        testCaseNo++;
                     }
                 }
 
@@ -249,8 +251,6 @@ public class CardTransferTests {
         project.setPropertyValue("errorDescr", "Processing has rejected Your request");
         project.setPropertyValue("erorCode", "772");
         project.setPropertyValue("expectedStatusRejected", expectedStatusRejected);
-        List<TestSuite> testSuites = project.getTestSuiteList();
-
 
         System.out.println("Running Test Suite: " + testSuite.getName());
         List<TestCase> testCases = testSuite.getTestCaseList();
@@ -296,7 +296,6 @@ public class CardTransferTests {
             assertEquals(invalidClientId, result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
             assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
-            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
         }
 
         result = statement.executeQuery(stmt_get_rejected_request);
@@ -340,6 +339,7 @@ public class CardTransferTests {
                 if (thisResult instanceof WsdlTestRequestStepResult) {
                     WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
                     System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
+                    
                 }
                 if (messages != null && messages.length > 0) {
                     for (String message : messages) {

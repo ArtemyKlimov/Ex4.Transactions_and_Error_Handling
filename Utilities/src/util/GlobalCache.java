@@ -131,7 +131,6 @@ public class GlobalCache {
 	}
 	
 	public static Long getCurrentDayAmount(String clientId) {
-		//String result = "empty";
 		Long result = 0L;
 		try {
 			MbGlobalMap globalMap = MbGlobalMap.getGlobalMap(currentDayAmountMap);
