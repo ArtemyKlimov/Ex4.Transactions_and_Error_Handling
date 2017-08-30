@@ -1,26 +1,20 @@
-import com.eviware.soapui.SoapUI;
-import com.eviware.soapui.StandaloneSoapUICore;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCase;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner;
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestRequestStepResult;
-import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStep;
-import com.eviware.soapui.model.support.PropertiesMap;
+
 import com.eviware.soapui.model.testsuite.*;
 import com.eviware.soapui.support.SoapUIException;
 import com.eviware.soapui.support.types.StringToObjectMap;
 import com.eviware.soapui.tools.SoapUITestCaseRunner;
-import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
 import org.junit.Assert;
 
 import java.util.*;
-import java.util.logging.*;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 
@@ -43,7 +37,6 @@ public class CardTransferTests {
     private String expectedStatusProcessed = "PROCESSED";
     private String statusError = "Error";
     private String expectedStatusRejected = "REJECTED";
-    private String expectedStatusAccepted = "ACCEPTED";
     private SoapUITestCaseRunner runner;
     private WsdlProject project = null;
     private TestSuite testSuite = null;
@@ -339,7 +332,7 @@ public class CardTransferTests {
                 if (thisResult instanceof WsdlTestRequestStepResult) {
                     WsdlTestRequestStepResult wsdlResult = (WsdlTestRequestStepResult) thisResult;
                     System.out.println("Response Content: \n" + wsdlResult.getResponseContent());
-                    
+
                 }
                 if (messages != null && messages.length > 0) {
                     for (String message : messages) {
@@ -427,7 +420,7 @@ public class CardTransferTests {
         long cardOne = 1000000000000000L + r.nextInt(100000);
         long cardTwo = 1000000000000000L + r.nextInt(100000);
         long cardThree = 1000000000000000L + r.nextInt(100000);
-        int clientId = 3;
+        int clientId;
         while(true) {
             clientId = r.nextInt(100000);
             if(clientId % 3 != 0)

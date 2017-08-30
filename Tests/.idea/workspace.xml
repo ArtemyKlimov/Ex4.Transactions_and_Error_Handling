@@ -26,12 +26,14 @@
       <file leaf-file-name="CardTransferTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/CardTransferTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="341" column="20" lean-forward="false" selection-start-line="341" selection-start-column="20" selection-end-line="341" selection-end-column="20" />
+            <state relative-caret-position="-338">
+              <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
-                <element signature="method#verifyValidDataCase#0;class#CardTransferTests#0" expanded="false" />
+                <element signature="method#verifyAmountNotMultipleOf100Case#0;class#CardTransferTests#0" expanded="false" />
+                <element signature="method#verifyInvalidClientIdCase#0;class#CardTransferTests#0" expanded="false" />
+                <element signature="method#verifyTooLargeAmountCase#0;class#CardTransferTests#0" expanded="false" />
                 <element signature="method#verifyInvalidInputMessageFormat#0;class#CardTransferTests#0" expanded="false" />
                 <element signature="method#verifyTooManyRequestsFromClientCase#0;class#CardTransferTests#0" expanded="false" />
                 <element signature="method#verifyTooManyRequestsWithOneCard#0;class#CardTransferTests#0" expanded="false" />
@@ -80,8 +82,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="338" />
-    <option name="y" value="24" />
+    <option name="x" value="126" />
+    <option name="y" value="5" />
     <option name="width" value="1718" />
     <option name="height" value="1005" />
   </component>
@@ -408,7 +410,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="338" y="24" width="1718" height="1005" extended-state="0" />
+    <frame x="126" y="5" width="1718" height="1005" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -444,7 +446,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -476,7 +478,9 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
-            <element signature="method#verifyValidDataCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyAmountNotMultipleOf100Case#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyInvalidClientIdCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyTooLargeAmountCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyInvalidInputMessageFormat#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsFromClientCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsWithOneCard#0;class#CardTransferTests#0" expanded="false" />
@@ -507,7 +511,9 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
-            <element signature="method#verifyValidDataCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyAmountNotMultipleOf100Case#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyInvalidClientIdCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyTooLargeAmountCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyInvalidInputMessageFormat#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsFromClientCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsWithOneCard#0;class#CardTransferTests#0" expanded="false" />
@@ -538,7 +544,9 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
-            <element signature="method#verifyValidDataCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyAmountNotMultipleOf100Case#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyInvalidClientIdCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyTooLargeAmountCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyInvalidInputMessageFormat#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsFromClientCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsWithOneCard#0;class#CardTransferTests#0" expanded="false" />
@@ -564,12 +572,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/CardTransferTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="341" column="20" lean-forward="false" selection-start-line="341" selection-start-column="20" selection-end-line="341" selection-end-column="20" />
+        <state relative-caret-position="-338">
+          <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#CardTransferTests#0;class#CardTransferTests#0" expanded="false" />
-            <element signature="method#verifyValidDataCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyAmountNotMultipleOf100Case#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyInvalidClientIdCase#0;class#CardTransferTests#0" expanded="false" />
+            <element signature="method#verifyTooLargeAmountCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyInvalidInputMessageFormat#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsFromClientCase#0;class#CardTransferTests#0" expanded="false" />
             <element signature="method#verifyTooManyRequestsWithOneCard#0;class#CardTransferTests#0" expanded="false" />
