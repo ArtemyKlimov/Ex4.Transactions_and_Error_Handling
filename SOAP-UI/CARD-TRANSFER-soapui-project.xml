@@ -164,9 +164,9 @@
    <soap:Header/>\r
    <soap:Body>\r
       <ib:cardTransactRq>\r
-         <ib:clientId>777</ib:clientId>
+         <ib:clientId>803</ib:clientId>
 	<ib:phoneNum>79101789827</ib:phoneNum>
-	<ib:amount>700</ib:amount>
+	<ib:amount>732</ib:amount>
 	<ib:sender>
 		<ib:cardNo>1111222233332788</ib:cardNo>
 		<ib:cardOwner>Ivan Petrov</ib:cardOwner>

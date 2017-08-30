@@ -27,14 +27,14 @@ import java.sql.*;
 import static org.junit.Assert.*;
 
 public class CardTransferTests {
-    private String validClientId = "7";
+    private String validClientId = "17";
     private String invalidClientId = "333";
     private String wrongClientId = "333";
     private String validAmount = "700";
     private String invalidAmount = "888";
     private String wrongCardNoFormat = "12345";
     private String tooLargeAmount = "21000";
-    private String validCardNo = "1111222233332222";
+    private String validCardNo = "1111222233331212";
     private String invalidCardNo = "11112";
     private String validPhoneNum = "79101785555";
     private String invalidPhoneNum = "1234567";
@@ -121,11 +121,12 @@ public class CardTransferTests {
         String guid = project.getTestSuiteList().get(0).getTestCaseList().get(0).getTestSuite().getPropertyValue("GUID");
         System.out.println("THIS IS PROPERTY_VALUE_GUID" + guid);
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException iex) {
             iex.printStackTrace();
         }
         String stmt = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
+        String smsListStmt = "SELECT * FROM SMSLIST where GUID = '" + guid + "'";
         ResultSet result = statement.executeQuery(stmt);
         System.out.println("Query has been executed");
         while (result.next()) {
@@ -133,7 +134,13 @@ public class CardTransferTests {
             assertEquals(validClientId, result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
             assertEquals(expectedStatusProcessed, result.getString("REQUEST_STATUS"));
-            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+            assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+        }
+
+        result = statement.executeQuery(smsListStmt);
+        while (result.next()) {
+            assertEquals("Your request was successfully completed", result.getString("TEXT"));
+            assertEquals("DONE", result.getString("STATUS"));
         }
 
         System.out.print("Testing finished successfully");
@@ -202,6 +209,7 @@ public class CardTransferTests {
 
         String stmt_get_request_status = "SELECT * FROM REQUEST_STATUS where GUID = '" + guid + "'";
         String stmt_get_rejected_request = "SELECT * FROM REQUEST_REJECTED WHERE GUID = '" + guid + "'";
+        String smsListStmt = "SELECT * FROM SMSLIST where GUID = '" + guid + "'";
         ResultSet result = statement.executeQuery(stmt_get_request_status);
 
         while (result.next()) {
@@ -216,6 +224,14 @@ public class CardTransferTests {
         while (result.next()) {
             assertEquals("789", result.getString("ERROR_CODE"));
             assertEquals("Amount must be multiple of 100", result.getString("ERROR_DESCR"));
+        }
+
+        result = statement.executeQuery(smsListStmt);
+
+        while (result.next()) {
+            System.out.println(result.getString("TEXT"));
+            assertTrue(result.getString("TEXT").contains("Amount must be multiple of 100"));
+            assertEquals("DONE", result.getString("STATUS"));
         }
 
         System.out.print("Testing finished successfully");

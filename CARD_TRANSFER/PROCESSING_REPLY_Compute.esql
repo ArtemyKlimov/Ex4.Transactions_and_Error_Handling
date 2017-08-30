@@ -16,17 +16,14 @@ CREATE COMPUTE MODULE PROCESSING_REPLY_Compute
 			CALL restoreCurrentDayAmount(CLIENT_ID, AMOUNT);
 			DECLARE CODE INTEGER inBody.ib:CODE;
 			DECLARE DESCR CHARACTER inBody.ib:DESCR;
-			--INSERT INTO Database.REQUEST_REJECTED(GUID, ERROR_CODE, ERROR_DESCR, DATETIME) 
-			--						 	   VALUES(GUID, CODE, DESCR, CURRENT_TIMESTAMP);
 			INSERT INTO Database.SMSLIST(GUID, TEXT, PHONE, STATUS) 
-	    				 	  VALUES(GUID, 'Your request was declined by Processing Service. Reason: ' || DESCR, PHONE_NUM, 'PENDING');			
-			THROW USER EXCEPTION MESSAGE CODE VALUES (DESCR);
+	    				 	  VALUES(GUID, 'Your request was declined by Processing Service. Reason: ' || DESCR, PHONE_NUM, 'PENDING');		
+		ELSE
+			UPDATE Database.REQUEST_STATUS  AS BS SET REQUEST_STATUS = 'PROCESSED' WHERE BS.GUID = GUID;
+		
+			INSERT INTO Database.SMSLIST(GUID, TEXT, PHONE, STATUS) 
+	    				 	  VALUES(GUID, 'Your request was successfully completed', PHONE_NUM, 'PENDING');	
 		END IF;
-		
-		UPDATE Database.REQUEST_STATUS  AS BS SET REQUEST_STATUS = 'PROCESSED' WHERE BS.GUID = GUID;
-		
-		INSERT INTO Database.SMSLIST(GUID, TEXT, PHONE, STATUS) 
-	    				 	  VALUES(GUID, 'Your request was successfully completed', PHONE_NUM, 'PENDING');
 		RETURN TRUE;
 	END;
 
