@@ -10,3 +10,6 @@ release/4.4.8_20160317.rar
 test/Новый текстовый документ.txt
 .DS_Store
 TestClientBarFiles
+Tests/global-groovy.log
+Tests/soapui.log
+Tests/soapui-errors.log

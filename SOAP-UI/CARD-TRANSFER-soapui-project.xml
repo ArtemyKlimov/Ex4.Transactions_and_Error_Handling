@@ -157,7 +157,7 @@
    <soap:Header/>\r
    <soap:Body>\r
       <ib:getStatusRq>\r
-         <ib:guid>4e7ee32e-be9f-438d-989f-e33c7a4ef75c</ib:guid>\r
+         <ib:guid>bddf6087-ec5a-49e4-a2f1-eae84505d86a</ib:guid>\r
       </ib:getStatusRq>\r
    </soap:Body>\r
 </soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/CARD_TRANSFER/CARD_TRANSFER/GET_REQUEST_STATUSRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9519dc38-85d2-4354-85e4-d0667ea8584d" isOneWay="false" action="http://www.example.org/CARD_TRANSFER/POST_REQUEST" name="POST_REQUEST" bindingOperationName="POST_REQUEST" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="728aa5df-2d4b-438e-96eb-6971eadee42c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
@@ -198,8 +198,7 @@
          </ib:receiver>\r
       </ib:cardTransactRq>\r
    </soap:Body>\r
-</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1169381d-5972-4beb-a6f1-9dbb36595d9d"/><con:assertion type="Simple Contains" id="9422e394-00aa-4c61-af44-c3fa538b6be7" name="ClientId"><con:configuration><token>${#Project#expectedClientId}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="8ae04c5f-97ed-448c-99ff-f21456e9eeb0" name="amount"><con:configuration><token>${#Project#expectedAmount}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="83024a66-f120-4364-aa09-b25e02426ecd" name="status"><con:configuration><token>${#Project#statusSuccess}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="83db5d08-a0d5-4d93-a861-6130c80e2b3f"><con:settings/><con:config><script>
-log.info "START"
+</soap:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1169381d-5972-4beb-a6f1-9dbb36595d9d"/><con:assertion type="Simple Contains" id="9422e394-00aa-4c61-af44-c3fa538b6be7" name="ClientId"><con:configuration><token>${#Project#expectedClientId}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="8ae04c5f-97ed-448c-99ff-f21456e9eeb0" name="amount"><con:configuration><token>${#Project#expectedAmount}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="83024a66-f120-4364-aa09-b25e02426ecd" name="status"><con:configuration><token>${#Project#statusSuccess}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="getGUID" id="83db5d08-a0d5-4d93-a861-6130c80e2b3f"><con:settings/><con:config><script>log.info "ErrorTestCase START. GUID is: "
 
 def previousTestStep = context.testCase.getTestStepAt(context.currentStepIndex - 1)
 String propertySpec = '${' + previousTestStep.name + '#Response}'
@@ -212,11 +211,15 @@ def guid = document.'**'.find { node->
     node.name() == 'guid' 
 }
 
+
+log.info guid.text()
+
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
 
-sleep(7000)
-log.info "guid is " + guid.text()</script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
+sleep(23000)
+log.info "TestCase FINISHED"
+</script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="24003437-2bf7-4b69-9e0d-85577757a527"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="16543b91-811f-4f7f-8cc5-c0f9a4926e85"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">\r
    <soap:Header/>\r
    <soap:Body>\r
       <ib:getStatusRq>\r
@@ -262,7 +265,7 @@ log.info guid.text()
 testRunner.testCase.testSuite.setPropertyValue( "GUID", guid.text() )
 
 
-sleep(7000)
+sleep(10000)
 log.info "ErrorTestCase FINISHED"
 </script></con:config></con:testStep><con:testStep type="request" name="GET_REQUEST_STATUS" id="de6cacfc-f27c-4288-865d-e1c6bbb9f3e8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CARD_TRANSFERSOAP12</con:interface><con:operation>GET_REQUEST_STATUS</con:operation><con:request name="GET_REQUEST_STATUS" id="0cdfe813-00fb-4219-96e0-f78af6efef4c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7800/CARD_TRANSFER</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ib="http://ib.novy.com">
    <soap:Header/>

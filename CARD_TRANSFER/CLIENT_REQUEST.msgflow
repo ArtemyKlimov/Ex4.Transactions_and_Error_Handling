@@ -24,7 +24,7 @@
       <nodes xmi:type="ComIbmSOAPExtract.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="133,227">
         <translation xmi:type="utility:ConstantString" string="SOAP Extract"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="702,241" dataSource="system-DBTwo" transaction="commit" computeExpression="esql://routine/#SOAP_IN_Compute.Main" computeMode="all">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="702,241" dataSource="system-DBTwo" connectDatasourceBeforeFlowStarts="true" transaction="commit" computeExpression="esql://routine/#SOAP_IN_Compute.Main" computeMode="all">
         <translation xmi:type="utility:ConstantString" string="Compute"/>
       </nodes>
       <nodes xmi:type="ComIbmValidate.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="505,236" domain="XMLNSC" checkDomain="true" validateMaster="contentAndValue">

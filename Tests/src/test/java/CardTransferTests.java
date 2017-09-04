@@ -68,9 +68,18 @@ public class CardTransferTests {
 
     @Test
     public void verifyValidDataCase() throws Exception {
-        project.setPropertyValue("cardNo", validCardNo);
-        project.setPropertyValue("clientId", validClientId);
-        project.setPropertyValue("expectedClientId", validClientId);
+        Random r = new Random();
+        long cardNo = 1000000000000000L + r.nextInt(100000000);
+        int client;
+        while(true) {
+            client = r.nextInt(100000);
+            if (client % 3 != 0)
+                break;
+        }
+        String validClient = String.valueOf(client);
+        project.setPropertyValue("cardNo", String.valueOf(cardNo));
+        project.setPropertyValue("clientId", validClient);
+        project.setPropertyValue("expectedClientId", validClient);
         project.setPropertyValue("amount", validAmount);
         project.setPropertyValue("expectedAmount", validAmount);
         project.setPropertyValue("phoneNum", validPhoneNum);
@@ -126,7 +135,7 @@ public class CardTransferTests {
         System.out.println("Query has been executed");
         while (result.next()) {
             assertEquals(validAmount, result.getString("AMOUNT"));
-            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validClient, result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
             assertEquals(expectedStatusProcessed, result.getString("REQUEST_STATUS"));
             assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
@@ -143,16 +152,23 @@ public class CardTransferTests {
 
     @Test
     public void verifyAmountNotMultipleOf100Case() throws Exception {
-        project.setPropertyValue("cardNo", validCardNo);
-        project.setPropertyValue("clientId", validClientId);
-        project.setPropertyValue("expectedClientId", validClientId);
+        Random r = new Random();
+        long cardNo = 1000000000000000L + r.nextInt(100000000);
+        int client;
+        while(true) {
+            client = r.nextInt(100000);
+            if (client % 3 != 0)
+                break;
+        }
+        String validClient  =String.valueOf(client);
+        project.setPropertyValue("cardNo", String.valueOf(cardNo));
+        project.setPropertyValue("clientId", validClient);
+        project.setPropertyValue("expectedClientId", validClient);
         project.setPropertyValue("amount", invalidAmount);
         project.setPropertyValue("expectedAmount", invalidAmount);
         project.setPropertyValue("phoneNum", validPhoneNum);
         project.setPropertyValue("expectedStatus", statusSuccess);
         project.setPropertyValue("expectedStatusProcessed", expectedStatusRejected);
-        List<TestSuite> testSuites = project.getTestSuiteList();
-
 
         System.out.println("Running Test Suite: "+ testSuite.getName());
         List<TestCase> testCases = testSuite.getTestCaseList();
@@ -161,20 +177,6 @@ public class CardTransferTests {
         System.out.println("Running Test Case: " + testCase.getName());
 
         WsdlTestCaseRunner runner = new WsdlTestCaseRunner(testCase, new StringToObjectMap() );
-         /*
-        WsdlTestStep step1 = testCase.getTestStepByName("POST_REQUEST");
-        WsdlTestStep step2 = testCase.getTestStepByName("getGUID");
-        WsdlTestStep step3 = testCase.getTestStepByName("GET_REQUEST_STATUS");
-        runner.runTestStep(step1);
-        runner.runTestStep(step2);
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException iex) {
-            iex.printStackTrace();
-        }
-        runner.runTestStep(step3);
-        System.out.println(runner.getReason());
-        */
         runner.run();
         List results = runner.getResults();
 
@@ -209,10 +211,10 @@ public class CardTransferTests {
 
         while (result.next()) {
             assertEquals(invalidAmount, result.getString("AMOUNT"));
-            assertEquals(validClientId, result.getString("CLIENT_ID"));
+            assertEquals(validClient, result.getString("CLIENT_ID"));
             assertEquals(validPhoneNum, result.getString("PHONE_NUM"));
             assertEquals(expectedStatusRejected, result.getString("REQUEST_STATUS"));
-            //assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
+           // assertEquals(alertStatusDone, result.getString("ALERT_STATUS"));
         }
 
         result = statement.executeQuery(stmt_get_rejected_request);
@@ -224,7 +226,6 @@ public class CardTransferTests {
         result = statement.executeQuery(smsListStmt);
 
         while (result.next()) {
-            System.out.println(result.getString("TEXT"));
             assertTrue(result.getString("TEXT").contains("Amount must be multiple of 100"));
             assertEquals("DONE", result.getString("STATUS"));
         }

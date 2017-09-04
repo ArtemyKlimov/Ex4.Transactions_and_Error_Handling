@@ -1,8 +1,8 @@
-2017-08-30 13:29:19,012 WARN  [SoapUI] Missing folder [C:\LocalRepo\EX4\Tests\ext] for external libraries
-2017-08-30 13:29:19,421 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\aklimov\soapui-settings.xml]
-2017-08-30 13:29:20,513 INFO  [PluginManager] 0 plugins loaded in 3 ms
-2017-08-30 13:29:20,513 INFO  [DefaultSoapUICore] All plugins loaded
-2017-08-30 13:29:21,464 INFO  [WsdlProject] Loaded project from [file:/C:/LocalRepo/EX4/SOAP-UI/CARD-TRANSFER-soapui-project.xml]
-2017-08-30 13:29:23,725 INFO  [log] START
-2017-08-30 13:29:23,999 INFO  [log] f1b9591d-6dfe-4c02-ab88-b5b2707ea625
-2017-08-30 13:29:31,022 INFO  [log] CHANGED
+2017-08-31 18:12:10,142 WARN  [SoapUI] Missing folder [C:\LocalRepo\EX4\Tests\ext] for external libraries
+2017-08-31 18:12:10,591 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\aklimov\soapui-settings.xml]
+2017-08-31 18:12:11,609 INFO  [PluginManager] 0 plugins loaded in 2 ms
+2017-08-31 18:12:11,609 INFO  [DefaultSoapUICore] All plugins loaded
+2017-08-31 18:12:12,502 INFO  [WsdlProject] Loaded project from [file:/C:/LocalRepo/EX4/SOAP-UI/CARD-TRANSFER-soapui-project.xml]
+2017-08-31 18:12:13,506 INFO  [log] ErrorTestCase START. GUID is: 
+2017-08-31 18:12:13,699 INFO  [log] 0cfe1c3c-38a9-4a34-a548-e3133501a893
+2017-08-31 18:12:23,723 INFO  [log] ErrorTestCase FINISHED
